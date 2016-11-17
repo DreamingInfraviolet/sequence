@@ -2,6 +2,10 @@ package com.audinarium.sequence.sequence;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.app.FragmentManager;
+import processing.android.PFragment;
+import processing.core.PApplet;
+import com.audinarium.sequence.sequence.Graphics.ProcessingSketch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -9,5 +13,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FragmentManager fragmentManager = getFragmentManager();
+        PApplet sketch = new ProcessingSketch();
+        PFragment fragment = new PFragment();
+        fragment.setSketch(sketch);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 }
