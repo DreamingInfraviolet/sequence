@@ -1,7 +1,7 @@
 package com.audinarium.sequence.sequence.Graphics;
 
-import android.opengl.GLES20;
-import android.opengl.Matrix;
+import android.util.Log;
+import android.view.MotionEvent;
 
 import processing.core.PApplet;
 
@@ -13,18 +13,20 @@ public class ProcessingSketch extends PApplet
 {
     Keyboard mKeyboard = new Keyboard();
     float mViewOffset = 0.0f;
-
+    float mKeyScaleMultiplier;
 
     public void settings()
     {
         fullScreen();
     }
 
-    public void setup() { }
+    public void setup()
+    {
+        mKeyScaleMultiplier = width * 5;
+    }
 
     public void draw()
     {
-        float scale = width * 5;
         fill(0);
         clear();
 
@@ -36,13 +38,48 @@ public class ProcessingSketch extends PApplet
             {
                 if (mKeyboard.isKeyWhite(key) == (whiteOrBlack == 1))
                     continue;
-                float w = mKeyboard.getKeyWidth(key) * scale;
+                float w = mKeyboard.getKeyWidth(key) * mKeyScaleMultiplier;
                 float h = mKeyboard.getKeyHeight(key) * height;
-                float x = mKeyboard.getKeyPosition(key) * scale;
+                float x = mKeyboard.getKeyPosition(key) * mKeyScaleMultiplier;
 
                 this.fill(mKeyboard.isKeyWhite(key) ? 255 : 0);
 
                 this.rect((x - w / 2), 0, w, h);
+            }
+        }
+    }
+
+    public boolean isMouseInKeyboard()
+    {
+        //@TODO: improve this
+        return true;
+    }
+
+    @Override
+    public void mousePressed()
+    {
+        if(isMouseInKeyboard())
+        {
+            for(int whiteOrBlack = 0; whiteOrBlack < 2; ++whiteOrBlack)
+            {
+                for (int key = 0; key < mKeyboard.sNKeys; ++key)
+                {
+                    // Try black keys first
+                    if (mKeyboard.isKeyWhite(key) == (whiteOrBlack == 0))
+                        continue;
+
+                    float w = mKeyboard.getKeyWidth(key) * mKeyScaleMultiplier;
+                    float h = mKeyboard.getKeyHeight(key) * height;
+                    float x = mKeyboard.getKeyPosition(key) * mKeyScaleMultiplier;
+
+                    x = x - w / 2;
+
+                    if(mouseY < h && mouseX > x && mouseX < x+w)
+                    {
+                        Log.i("keyboard", "Pressed key " + key);
+                        return;
+                    }
+                }
             }
         }
     }
