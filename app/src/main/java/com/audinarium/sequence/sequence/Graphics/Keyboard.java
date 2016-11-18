@@ -25,7 +25,7 @@ public class Keyboard
     /** The width of a white key */
     public final static float sWhiteKeyWidth  = sLocalKeyboardWidth / (sNKeys / 12 * 7);
     /** The width of a black key */
-    public final static float sBlackKeyWidth  = sWhiteKeyWidth * 0.8f;
+    public final static float sBlackKeyWidth  = sWhiteKeyWidth * 0.5f;
     /** Some black keys are slightly offset left or right for seemingly ergonomic/aesthetic purposes.
      *  This is the amount by which they should be offset. */
     public final static float sBlackKeyOffset = sWhiteKeyWidth * 0.05f;
@@ -67,20 +67,20 @@ public class Keyboard
     }
 
     /** Returns the width of a key in local coordinates */
-    private float getKeyWidth(int index)
+    public float getKeyWidth(int index)
     {
         return isKeyWhite(index) ? sWhiteKeyVisibleWidth : sBlackKeyWidth;
     }
 
     /** Returns the height of a key in local coordinates */
-    private float getKeyHeight(int index)
+    public float getKeyHeight(int index)
     {
         return isKeyWhite(index) ? sWhiteKeyHeight : sBlackKeyHeight;
     }
 
     /** Returns the position of the key in local coordinates.
      * The centre point is defined to be the middle of the top of the key. */
-    private float getKeyPosition(int index)
+    public float getKeyPosition(int index)
     {
             int octaveKeyIndex = index % sOctaveKeyPositions.length;
             int octave = index / sOctaveKeyPositions.length;

@@ -43,7 +43,7 @@ public class MainRenderer implements GLSurfaceView.Renderer {
 
     /* Called after the surface is created and whenever the OpenGL ES surface size changes. */
     @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
+    public void onSurfaceChanged(GL10 gl, int width, int height){
         mRenderViews[RenderViews.KeyboardView.ordinal()].setViewport(0, 0, width, height/2);
         mRenderViews[RenderViews.StaveView.ordinal()].setViewport(0, height/2, width, height/2);
     }
