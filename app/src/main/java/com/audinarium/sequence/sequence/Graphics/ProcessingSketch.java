@@ -27,6 +27,7 @@ public class ProcessingSketch extends PApplet
 
     public void draw()
     {
+        final float blackKeyRounding = 0.002f * mKeyScaleMultiplier;
         fill(0);
         clear();
 
@@ -44,7 +45,9 @@ public class ProcessingSketch extends PApplet
 
                 this.fill(mKeyboard.isKeyWhite(key) ? 255 : 0);
 
-                this.rect((x - w / 2), 0, w, h);
+                float keyRounding = (whiteOrBlack == 1) ? blackKeyRounding : 0;
+
+                this.rect((x - w / 2), 0, w, h, 0, 0, keyRounding, keyRounding);
             }
         }
     }
