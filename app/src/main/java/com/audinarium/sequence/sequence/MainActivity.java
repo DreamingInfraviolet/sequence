@@ -12,6 +12,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AudioPlayback.init(getApplicationContext());
+
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getFragmentManager();
         PApplet sketch = new ProcessingSketch();

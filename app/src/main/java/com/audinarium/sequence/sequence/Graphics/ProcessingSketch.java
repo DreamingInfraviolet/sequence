@@ -3,6 +3,8 @@ package com.audinarium.sequence.sequence.Graphics;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.audinarium.sequence.sequence.AudioPlayback;
+
 import processing.core.PApplet;
 
 /**
@@ -79,7 +81,8 @@ public class ProcessingSketch extends PApplet
 
                     if(mouseY < h && mouseX > x && mouseX < x+w)
                     {
-                        Log.i("keyboard", "Pressed key " + key);
+                        AudioPlayback.play(key);
+
                         return;
                     }
                 }
