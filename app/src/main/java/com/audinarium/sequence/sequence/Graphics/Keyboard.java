@@ -8,6 +8,17 @@ package com.audinarium.sequence.sequence.Graphics;
  * to generating the keys.
  */
 
+/**
+ * Inputs to Niamh's thingy:
+ * * Major/Minor
+ * * KeyNames array
+ * Outputs:
+ * * Chord array
+ *
+ * Chord:
+ * * KeyNames a, b, c;
+ */
+
 public class Keyboard
 {
     /** Represents which keys are black and white on an octave */
@@ -48,6 +59,10 @@ public class Keyboard
                         sWhiteKeyWidth*6 + sBlackKeyOffset,                      // A#,
                         sWhiteKeyWidth*6 + sWhiteKeyWidth/2,                     // B
             };
+
+    public enum KeyNames {
+        C, CS, D, Ds, E, F, FS, G, GS, A, AS, B
+    };
 
     /** Returns the matrix to translate a unit quad to the correct position on the keyboard
      * @TODO: Fill this in */

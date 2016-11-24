@@ -46,7 +46,6 @@ public class AudioPlayback
         sSoundIds[22] = sSoundPool.load(context, R.raw.note_highasharp, 1);
         sSoundIds[23] = sSoundPool.load(context, R.raw.note_highb, 1);
         sSoundIds[24] = sSoundPool.load(context, R.raw.note_highc2, 1);
-
     }
 
     public static void play(int note)
