@@ -1,8 +1,5 @@
 package com.audinarium.sequence.sequence.Graphics;
 
-import android.util.Log;
-import android.view.MotionEvent;
-
 import com.audinarium.sequence.sequence.AudioPlayback;
 
 import processing.core.PApplet;
@@ -54,37 +51,28 @@ public class ProcessingSketch extends PApplet
         }
     }
 
-    public boolean isMouseInKeyboard()
-    {
-        //@TODO: improve this
-        return true;
-    }
-
     @Override
     public void mousePressed()
     {
-        if(isMouseInKeyboard())
+        for(int whiteOrBlack = 0; whiteOrBlack < 2; ++whiteOrBlack)
         {
-            for(int whiteOrBlack = 0; whiteOrBlack < 2; ++whiteOrBlack)
+            for (int key = 0; key < mKeyboard.sNKeys; ++key)
             {
-                for (int key = 0; key < mKeyboard.sNKeys; ++key)
+                // Try black keys first
+                if (mKeyboard.isKeyWhite(key) == (whiteOrBlack == 0))
+                    continue;
+
+                float w = mKeyboard.getKeyWidth(key) * mKeyScaleMultiplier;
+                float h = mKeyboard.getKeyHeight(key) * height;
+                float x = mKeyboard.getKeyPosition(key) * mKeyScaleMultiplier;
+
+                x = x - w / 2;
+
+                if(mouseY < h && mouseX > x && mouseX < x+w)
                 {
-                    // Try black keys first
-                    if (mKeyboard.isKeyWhite(key) == (whiteOrBlack == 0))
-                        continue;
+                    AudioPlayback.play(key);
 
-                    float w = mKeyboard.getKeyWidth(key) * mKeyScaleMultiplier;
-                    float h = mKeyboard.getKeyHeight(key) * height;
-                    float x = mKeyboard.getKeyPosition(key) * mKeyScaleMultiplier;
-
-                    x = x - w / 2;
-
-                    if(mouseY < h && mouseX > x && mouseX < x+w)
-                    {
-                        AudioPlayback.play(key);
-
-                        return;
-                    }
+                    return;
                 }
             }
         }

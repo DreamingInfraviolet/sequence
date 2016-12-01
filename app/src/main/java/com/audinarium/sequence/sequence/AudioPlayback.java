@@ -1,8 +1,6 @@
 package com.audinarium.sequence.sequence;
 
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
 
