@@ -6,6 +6,12 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.util.Log;
 
+import com.audinarium.sequence.sequence.Graphics.Chord;
+
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * Created by Volodymyr on 11/24/2016.
  */

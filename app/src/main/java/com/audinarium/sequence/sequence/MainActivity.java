@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.app.FragmentManager;
 import processing.android.PFragment;
 import processing.core.PApplet;
+
+import com.audinarium.sequence.sequence.Graphics.Chord;
 import com.audinarium.sequence.sequence.Graphics.ProcessingSketch;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,4 +26,5 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.container, fragment)
                 .commit();
     }
+
 }
