@@ -31,7 +31,7 @@ public class Chord{
         C, CS, D, DS, E, F, FS, G, GS, A, AS, B
     };
 
-    public enum ChordNamesMajor{
+    public enum ChordNames{
         ChordC, ChordCS, ChordD, ChordDS, ChordE, ChordF, ChordFS, ChordG, ChordGS, ChordA, ChordAS, ChordB
     };
     public enum ChordNamesMinor{
@@ -40,18 +40,18 @@ public class Chord{
 
     static void ChordOrderMajor()
     {
-        Chord C = sMajor[ChordNamesMajor.ChordC.ordinal()];
-        Chord Csharp = sMajor[ChordNamesMajor.ChordCS.ordinal()];
-        Chord D = sMajor[ChordNamesMajor.ChordD.ordinal()];
-        Chord Dsharp = sMajor[ChordNamesMajor.ChordDS.ordinal()];
-        Chord E = sMajor[ChordNamesMajor.ChordE.ordinal()];
-        Chord F = sMajor[ChordNamesMajor.ChordF.ordinal()];
-        Chord Fsharp = sMajor[ChordNamesMajor.ChordFS.ordinal()];
-        Chord G = sMajor[ChordNamesMajor.ChordG.ordinal()];
-        Chord Gsharp = sMajor[ChordNamesMajor.ChordGS.ordinal()];
-        Chord A = sMajor[ChordNamesMajor.ChordA.ordinal()];
-        Chord Asharp = sMajor[ChordNamesMajor.ChordAS.ordinal()];
-        Chord B = sMajor[ChordNamesMajor.ChordB.ordinal()];
+//        Chord C = sMajor[ChordNamesMajor.ChordC.ordinal()];
+//        Chord Csharp = sMajor[ChordNamesMajor.ChordCS.ordinal()];
+//        Chord D = sMajor[ChordNamesMajor.ChordD.ordinal()];
+//        Chord Dsharp = sMajor[ChordNamesMajor.ChordDS.ordinal()];
+//        Chord E = sMajor[ChordNamesMajor.ChordE.ordinal()];
+//        Chord F = sMajor[ChordNamesMajor.ChordF.ordinal()];
+//        Chord Fsharp = sMajor[ChordNamesMajor.ChordFS.ordinal()];
+//        Chord G = sMajor[ChordNamesMajor.ChordG.ordinal()];
+//        Chord Gsharp = sMajor[ChordNamesMajor.ChordGS.ordinal()];
+//        Chord A = sMajor[ChordNamesMajor.ChordA.ordinal()];
+//        Chord Asharp = sMajor[ChordNamesMajor.ChordAS.ordinal()];
+//        Chord B = sMajor[ChordNamesMajor.ChordB.ordinal()];
     }
     static void ChordOrderMinor()
     {
@@ -69,19 +69,19 @@ public class Chord{
         Chord Bm = sMinor[ChordNamesMinor.ChordBm.ordinal()];
     }
 
-    public static Chord[] sGetChordsWithKeys(KeyNames[] names)
+    public static Chord[] sGetChordsWithKeys(KeyNames[] names, Chord[] chordList)
     {
-        return sGetChordsWithKeys(names, names.length);
+        return sGetChordsWithKeys(names, chordList, names.length);
     }
 
     /** Returns all chords that contain all of the key names in the chord
      * @param names An array of keys to search for
      * @param numberToSucceed Will return a chord if at least numberToSucceed keys are in it.*/
-    public static Chord[] sGetChordsWithKeys(KeyNames[] names, int numberToSucceed)
+    public static Chord[] sGetChordsWithKeys(KeyNames[] names, Chord[] chordList, int numberToSucceed)
     {
         ArrayList<Chord> output = new ArrayList<>();
 
-        for(Chord c : sMajor)
+        for(Chord c : chordList)
         {
             int successes = 0;
 
@@ -96,7 +96,7 @@ public class Chord{
         return output.toArray(new Chord[output.size()]);
     }
 
-    static Chord sMajor[] = new Chord[]
+    public static Chord sMajor[] = new Chord[]
             {
                     new Chord(KeyNames.C, KeyNames.E, KeyNames.G),
                     new Chord(KeyNames.CS, KeyNames.F, KeyNames.GS),
@@ -112,7 +112,7 @@ public class Chord{
                     new Chord(KeyNames.B, KeyNames.DS, KeyNames.FS)
 
             };
-    static Chord sMinor[] = new Chord[]
+    public static Chord sMinor[] = new Chord[]
             {
                     new Chord(KeyNames.C, KeyNames.DS, KeyNames.G),
                     new Chord(KeyNames.CS, KeyNames.E, KeyNames.GS),
