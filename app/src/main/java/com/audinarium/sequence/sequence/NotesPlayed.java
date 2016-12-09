@@ -15,7 +15,7 @@ import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.D;
 
 public class NotesPlayed {
 
-    boolean anyAre(Chord.KeyNames a, Chord.KeyNames b, Chord.KeyNames c, Chord.KeyNames d, Chord.KeyNames q)
+    static boolean anyAre(Chord.KeyNames a, Chord.KeyNames b, Chord.KeyNames c, Chord.KeyNames d, Chord.KeyNames q)
     {
         return a == q || b == q || c == q || d == q;
     }
@@ -35,50 +35,190 @@ public class NotesPlayed {
                 Chord.KeyNames c = notesPlayed.get(i+2);
                 Chord.KeyNames d = notesPlayed.get(i+3);
 
+                //C/Cm
                 if(anyAre(a, b, c, d, Chord.KeyNames.C))
                 {
-                    if(anyAre(a, b, c, d, Chord.KeyNames.E))
+                    if(anyAre(a, b, c, d, Chord.KeyNames.G))
                     {
-                        if(anyAre(a, b, c, d, Chord.KeyNames.G))
+                        if(anyAre(a, b, c, d, Chord.KeyNames.E))
                         {
                             chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordC.ordinal()]);
                         }
-                        else if(anyAre(a, b, c, d, Chord.KeyNames.A))
+                        else if(anyAre(a, b, c, d, Chord.KeyNames.DS))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordC.ordinal()]);
+                        }
+                    }
+                }
+                //CS/DF/CSm/DFm
+                else if(anyAre(a, b, c, d, Chord.KeyNames.CS))
+                {
+                    if(anyAre(a, b, c, d, Chord.KeyNames.GS))
+                    {
+                        if(anyAre(a, b, c, d, Chord.KeyNames.F))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordCS.ordinal()]);
+                        }
+                        else if(anyAre(a, b, c, d, Chord.KeyNames.E))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordCS.ordinal()]);
+                        }
+                    }
+                }
+                //D/Dm
+                else if(anyAre(a, b, c, d, Chord.KeyNames.D))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.A))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.FS))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordD.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.F))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordD.ordinal()]);
+                        }
+                    }
+                }
+                //DS/EF/DSm/EFm
+                else if(anyAre(a,b,c,d, Chord.KeyNames.DS))
+                {
+                    if(anyAre(a, b, c, d, Chord.KeyNames.AS))
+                    {
+                        if (anyAre(a, b, c, d, Chord.KeyNames.G))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordDS.ordinal()]);
+                        }
+                        else if (anyAre(a, b, c, d, Chord.KeyNames.FS))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordDS.ordinal()]);
+                        }
+                    }
+                }
+                //E/Em
+                else if(anyAre(a,b,c,d, Chord.KeyNames.E))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.B))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.GS))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordE.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.G))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordE.ordinal()]);
+                        }
+                    }
+                }
+                //F/Fm
+                else if(anyAre(a,b,c,d, Chord.KeyNames.F))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.C))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.A))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordF.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.GS))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordF.ordinal()]);
+                        }
+                    }
+                }
+                //FS/GF/FSm/GFm
+                else if(anyAre(a,b,c,d, Chord.KeyNames.FS))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.CS))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.AS))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordFS.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.A))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordFS.ordinal()]);
+                        }
+                    }
+                }
+                //G/Gm
+                else if(anyAre(a,b,c,d, Chord.KeyNames.G))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.D))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.B))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordG.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.AS))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordG.ordinal()]);
+                        }
+                    }
+                }
+                //GS/AF/GSm/AFm
+                else if(anyAre(a,b,c,d, Chord.KeyNames.GS))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.DS))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.C))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordGS.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.B))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordGS.ordinal()]);
+                        }
+                    }
+                }
+                //A/Am
+                else if(anyAre(a,b,c,d, Chord.KeyNames.A))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.E))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.CS))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordA.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.C))
                         {
                             chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordA.ordinal()]);
                         }
                     }
-                    else if(anyAre(a, b, c, d, Chord.KeyNames.F))
+                }
+                //AS/BF/ASm/BFm
+                else if(anyAre(a,b,c,d, Chord.KeyNames.AS))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.F))
                     {
-                        if(anyAre(a, b, c, d, Chord.KeyNames.A))
+                        if(anyAre(a,b,c,d, Chord.KeyNames.D))
                         {
-                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordF.ordinal()]);
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordAS.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.CS))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordAS.ordinal()]);
+                        }
+                    }
+                }
+                //B/Bm
+                else if(anyAre(a,b,c,d, Chord.KeyNames.B))
+                {
+                    if(anyAre(a,b,c,d, Chord.KeyNames.FS))
+                    {
+                        if(anyAre(a,b,c,d, Chord.KeyNames.DS))
+                        {
+                            chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordB.ordinal()]);
+                        }
+                        else if(anyAre(a,b,c,d, Chord.KeyNames.D))
+                        {
+                            chordOutput.add(Chord.sMinor[Chord.ChordNames.ChordB.ordinal()]);
                         }
                     }
                 }
             }
-            //Putting all melodies in 4/4 ... should we have an option to also have in 3/4 maybe?
-            //Do same thing for every 3?
-            for(int j = 0; j <= 4 ; j++)
-            {
-            //Search through the first four notes and find the chord with the most matching notes
-            //Chord with most matching will be the chord output for the bar
-                return chordOutput;
-            }
-            //Do this for each four notes.
-            //....will this depend on duration of note? They may want rests in their music
-            //Are we basing this on only crochets or other values aswell? Minums, Quavers, Semibreves?
 
-            //Do we need for 3/4? See below
-            /**for(int j = 0; j <= 3; j++)
-            {
-                //Search through the first four notes and find the chord with the most matching notes
-                //Chord with most matching will be the chord output for the bar
-                return chordOutput;
-            }**/
         }
         //return chord for each bar
         return chordOutput;
     }
-
 }
