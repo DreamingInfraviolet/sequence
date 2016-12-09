@@ -35,6 +35,10 @@ public class NotesPlayed {
                 Chord.KeyNames c = notesPlayed.get(i+2);
                 Chord.KeyNames d = notesPlayed.get(i+3);
 
+                //Niamh's Comments!!
+                //This is so far for if 3 of the notes are in the bar.
+                //Have to do it now for 2 and then determine the chord if there is a bar with 2 notes in one chord and 2 in another
+
                 //C/Cm
                 if(anyAre(a, b, c, d, Chord.KeyNames.C))
                 {
