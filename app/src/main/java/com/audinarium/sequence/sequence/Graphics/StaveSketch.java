@@ -156,7 +156,7 @@ public class StaveSketch extends PApplet
 
             background(255, 255, 255);
             fill(60, 60, 60);
-            drawBars(6, xOffset, 40, barHeight);
+            drawBars(nBars, xOffset, 40, barHeight);
             fill(0, 0, 0);
             drawNotes(mNotes, xOffset, 40, barHeight);
         }
