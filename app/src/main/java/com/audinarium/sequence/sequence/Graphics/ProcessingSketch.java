@@ -1,8 +1,12 @@
 package com.audinarium.sequence.sequence.Graphics;
 
+import android.util.Log;
+
 import com.audinarium.sequence.sequence.AudioPlayback;
+import com.audinarium.sequence.sequence.NotesPlayed;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import processing.core.PApplet;
 
@@ -75,6 +79,7 @@ public class ProcessingSketch extends PApplet
                 {
                     AudioPlayback.play(key);
                     mKeysBeingPlayed.add(keyIdToName(key));
+
 
                     return;
                 }
