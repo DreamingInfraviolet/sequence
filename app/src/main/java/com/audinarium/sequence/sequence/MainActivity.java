@@ -42,6 +42,35 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, StaveActivity.class));
             }
         });
+
+        //Niamhs Button Programming
+        final Button undoButton = (Button)findViewById(R.id.undoButton);
+        final Button redoButton = (Button)findViewById(R.id.redoButton);
+        final Button resetButton = (Button)findViewById(R.id.resetButton);
+
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            NotesPlayed
+            }
+        });
+
+        redoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
     }
 
 }
