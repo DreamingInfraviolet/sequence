@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.audinarium.sequence.sequence.Graphics.*;
 import com.audinarium.sequence.sequence.Graphics.StaveSketch;
 
 import processing.android.PFragment;
@@ -26,10 +25,10 @@ public class StaveActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_stave);
-
         FragmentManager fragmentManager = getFragmentManager();
+        PApplet sketch = new StaveSketch();
         PFragment fragment = new PFragment();
-        fragment.setSketch(new StaveSketch());
+        fragment.setSketch(sketch);
         fragmentManager.beginTransaction()
                 .replace(R.id.stave_layout, fragment)
                 .commit();

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.container, fragment)
                 .commit();
 
+
         final ImageButton submitButton = (ImageButton)findViewById(R.id.submitButton);
 
         submitButton.setOnClickListener(new View.OnClickListener()
