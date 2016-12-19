@@ -16,17 +16,35 @@ import com.audinarium.sequence.sequence.Graphics.ProcessingSketch;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static MainActivity sInstance = null;
+
+    public static MainActivity instance()
+    {
+        return sInstance;
+    }
+
+    public ProcessingSketch mSketch;
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        sInstance = this;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sInstance = this;
+
         super.onCreate(savedInstanceState);
 
         AudioPlayback.init(getApplicationContext());
 
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getFragmentManager();
-        PApplet sketch = new ProcessingSketch();
+        mSketch = new ProcessingSketch();
         PFragment fragment = new PFragment();
-        fragment.setSketch(sketch);
+        fragment.setSketch(mSketch);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();

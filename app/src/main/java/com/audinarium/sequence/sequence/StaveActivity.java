@@ -26,7 +26,7 @@ public class StaveActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_stave);
         FragmentManager fragmentManager = getFragmentManager();
-        PApplet sketch = new StaveSketch();
+        PApplet sketch = new StaveSketch(MainActivity.instance().mSketch.getKeysPlayed());
         PFragment fragment = new PFragment();
         fragment.setSketch(sketch);
         fragmentManager.beginTransaction()
@@ -40,6 +40,7 @@ public class StaveActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                MainActivity.instance().mSketch.clearKeysPlayed();
                 startActivity(new Intent(StaveActivity.this, MainActivity.class));
             }
         });
