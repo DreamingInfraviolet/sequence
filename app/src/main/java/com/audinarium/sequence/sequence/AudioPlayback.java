@@ -54,6 +54,13 @@ public class AudioPlayback
         sSoundIds[24] = sSoundPool.load(context, R.raw.note_highc2, 1);
     }
 
+    public static void play(Chord q)
+    {
+        play(q.doh.ordinal());
+        play(q.mi.ordinal());
+        play(q.soh.ordinal());
+    }
+
     public static void play(int note)
     {
         if(note >= sSoundIds.length)

@@ -13,7 +13,7 @@ import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.C;
 
 public class Chord{
 
-    KeyNames doh, mi, soh;
+    public KeyNames doh, mi, soh;
 
     public Chord(KeyNames doh_, KeyNames mi_, KeyNames soh_)
     {
@@ -34,40 +34,6 @@ public class Chord{
     public enum ChordNames{
         ChordC, ChordCS, ChordD, ChordDS, ChordE, ChordF, ChordFS, ChordG, ChordGS, ChordA, ChordAS, ChordB
     };
-    public enum ChordNamesMinor{
-        ChordCm, ChordCSm, ChordDm, ChordDSm, ChordEm, ChordFm, ChordFSm, ChordGm, ChordGSm, ChordAm, ChordASm, ChordBm
-    };
-
-    static void ChordOrderMajor()
-    {
-//        Chord C = sMajor[ChordNamesMajor.ChordC.ordinal()];
-//        Chord Csharp = sMajor[ChordNamesMajor.ChordCS.ordinal()];
-//        Chord D = sMajor[ChordNamesMajor.ChordD.ordinal()];
-//        Chord Dsharp = sMajor[ChordNamesMajor.ChordDS.ordinal()];
-//        Chord E = sMajor[ChordNamesMajor.ChordE.ordinal()];
-//        Chord F = sMajor[ChordNamesMajor.ChordF.ordinal()];
-//        Chord Fsharp = sMajor[ChordNamesMajor.ChordFS.ordinal()];
-//        Chord G = sMajor[ChordNamesMajor.ChordG.ordinal()];
-//        Chord Gsharp = sMajor[ChordNamesMajor.ChordGS.ordinal()];
-//        Chord A = sMajor[ChordNamesMajor.ChordA.ordinal()];
-//        Chord Asharp = sMajor[ChordNamesMajor.ChordAS.ordinal()];
-//        Chord B = sMajor[ChordNamesMajor.ChordB.ordinal()];
-    }
-    static void ChordOrderMinor()
-    {
-        Chord Cm = sMinor[ChordNamesMinor.ChordCm.ordinal()];
-        Chord Csharpm = sMinor[ChordNamesMinor.ChordCSm.ordinal()];
-        Chord Dm = sMinor[ChordNamesMinor.ChordDm.ordinal()];
-        Chord Dsharpm = sMinor[ChordNamesMinor.ChordDSm.ordinal()];
-        Chord Em = sMinor[ChordNamesMinor.ChordEm.ordinal()];
-        Chord Fm = sMinor[ChordNamesMinor.ChordFm.ordinal()];
-        Chord Fsharpm = sMinor[ChordNamesMinor.ChordFSm.ordinal()];
-        Chord Gm = sMinor[ChordNamesMinor.ChordGm.ordinal()];
-        Chord Gsharpm = sMinor[ChordNamesMinor.ChordGSm.ordinal()];
-        Chord Am = sMinor[ChordNamesMinor.ChordAm.ordinal()];
-        Chord Asharpm = sMinor[ChordNamesMinor.ChordASm.ordinal()];
-        Chord Bm = sMinor[ChordNamesMinor.ChordBm.ordinal()];
-    }
 
     public static Chord[] sGetChordsWithKeys(KeyNames[] names, Chord[] chordList)
     {

@@ -14,7 +14,6 @@ import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.D;
  */
 
 public class NotesPlayed {
-
     static boolean anyAre(Chord.KeyNames a, Chord.KeyNames b, Chord.KeyNames c, Chord.KeyNames d, Chord.KeyNames q)
     {
         return a == q || b == q || c == q || d == q;
