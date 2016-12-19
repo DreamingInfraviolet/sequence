@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                if(MainActivity.instance().mSketch.getUndoStack().empty())
+                    return;
                 MainActivity.instance().mSketch.getKeysPlayed().add(MainActivity.instance().mSketch.getUndoStack().pop());
             }
         });

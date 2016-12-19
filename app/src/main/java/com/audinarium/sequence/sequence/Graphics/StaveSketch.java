@@ -143,6 +143,7 @@ public class StaveSketch extends PApplet
         textFont(musicFont);
         textSize(barHeight);
         frameRate(30);
+
     }
 
     @Override
