@@ -1,5 +1,10 @@
 package com.audinarium.sequence.sequence.Graphics;
 
+import com.audinarium.sequence.sequence.Graphics.Chord.KeyNames;
+
+import java.security.Key;
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 
@@ -31,6 +36,19 @@ class Note
         this.index = index;
         this.offset = offset;
     }
+
+    public static Note fromKeyId(int id)
+    {
+        int octave = id / 12;
+        int key = id % 12;
+
+        int noteIndex = new int[]{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}[key];
+        Offset offset = (key == 1 || key == 3 || key == 6 || key == 8 || key == 10) ? Offset.Sharp : Offset.None;
+
+        noteIndex += octave * 7;
+
+        return new Note(noteIndex, offset);
+    }
 }
 
 class MusicFont
@@ -52,6 +70,17 @@ public class StaveSketch extends PApplet
     PFont musicFont;
     int barHeight;
     int scroll = 0;
+    Note[] mNotes = null;
+
+    public StaveSketch(ArrayList<Integer> keys)
+    {
+        mNotes = new Note[keys.size()];
+
+        for(int i = 0; i < mNotes.length; ++i)
+        {
+            mNotes[i] = Note.fromKeyId(keys.get(i));
+        }
+    }
 
     void drawBars(int n, float xOffset, float yOffset, float h)
     {
@@ -119,27 +148,7 @@ public class StaveSketch extends PApplet
     @Override
     public void draw()
     {
-        Note[] notes = new Note[] {
-                new Note(0, Note.Offset.None),
-                new Note(0, Note.Offset.Sharp),
-                new Note(1, Note.Offset.Flat),
-                new Note(1, Note.Offset.None),
-                new Note(1, Note.Offset.Sharp),
-                new Note(2, Note.Offset.Flat),
-                new Note(2, Note.Offset.None),
-                new Note(3, Note.Offset.None),
-                new Note(3, Note.Offset.Sharp),
-                new Note(4, Note.Offset.Flat),
-                new Note(4, Note.Offset.None),
-                new Note(4, Note.Offset.Sharp),
-                new Note(5, Note.Offset.Flat),
-                new Note(5, Note.Offset.None),
-                new Note(5, Note.Offset.Sharp),
-                new Note(6, Note.Offset.Flat),
-                new Note(6, Note.Offset.None),
-        };
-
-        int nBars = notes.length / 4 + (notes.length % 4 == 0 ? 0 : 1);
+        int nBars = mNotes.length / 4 + (mNotes.length % 4 == 0 ? 0 : 1);
 
         scroll = (scroll + 10) % 1000;
         {
@@ -149,7 +158,7 @@ public class StaveSketch extends PApplet
             fill(60, 60, 60);
             drawBars(6, xOffset, 40, barHeight);
             fill(0, 0, 0);
-            drawNotes(notes, xOffset, 40, barHeight);
+            drawNotes(mNotes, xOffset, 40, barHeight);
         }
     }
 }

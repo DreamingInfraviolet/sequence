@@ -16,10 +16,20 @@ import processing.core.PApplet;
 
 public class ProcessingSketch extends PApplet
 {
-    ArrayList<Chord.KeyNames> mKeysBeingPlayed = new ArrayList<>();
+    ArrayList<Integer> mKeysBeingPlayed = new ArrayList<>();
     Keyboard mKeyboard = new Keyboard();
     float mViewOffset = 0.0f;
     float mKeyScaleMultiplier;
+
+    public ArrayList<Integer> getKeysPlayed()
+    {
+        return mKeysBeingPlayed;
+    }
+
+    public void clearKeysPlayed()
+    {
+        mKeysBeingPlayed.clear();
+    }
 
     public void settings()
     {
@@ -78,8 +88,7 @@ public class ProcessingSketch extends PApplet
                 if(mouseY < h && mouseX > x && mouseX < x+w)
                 {
                     AudioPlayback.play(key);
-                    mKeysBeingPlayed.add(keyIdToName(key));
-
+                    mKeysBeingPlayed.add(key);
 
                     return;
                 }
