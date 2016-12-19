@@ -7,6 +7,7 @@ import com.audinarium.sequence.sequence.NotesPlayed;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 import processing.core.PApplet;
 
@@ -20,14 +21,21 @@ public class ProcessingSketch extends PApplet
     Keyboard mKeyboard = new Keyboard();
     float mViewOffset = 0.0f;
     float mKeyScaleMultiplier;
+    Stack<Integer> mUndoStack = new Stack();
 
     public ArrayList<Integer> getKeysPlayed()
     {
         return mKeysBeingPlayed;
     }
 
+    public Stack<Integer> getUndoStack()
+    {
+        return mUndoStack;
+    }
+
     public void clearKeysPlayed()
     {
+        mUndoStack.clear();
         mKeysBeingPlayed.clear();
     }
 
@@ -87,6 +95,7 @@ public class ProcessingSketch extends PApplet
 
                 if(mouseY < h && mouseX > x && mouseX < x+w)
                 {
+                    mUndoStack.clear();
                     AudioPlayback.play(key);
                     mKeysBeingPlayed.add(key);
 

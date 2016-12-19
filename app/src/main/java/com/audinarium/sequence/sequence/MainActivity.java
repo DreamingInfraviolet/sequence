@@ -9,9 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import processing.android.PFragment;
-import processing.core.PApplet;
 
-import com.audinarium.sequence.sequence.Graphics.Chord;
 import com.audinarium.sequence.sequence.Graphics.ProcessingSketch;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +58,40 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, StaveActivity.class));
             }
         });
+
+        //Niamhs Button Programming
+        final Button undoButton = (Button)findViewById(R.id.undoButton);
+        final Button redoButton = (Button)findViewById(R.id.redoButton);
+        final Button resetButton = (Button)findViewById(R.id.resetButton);
+
+        undoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                MainActivity.instance().mSketch.getUndoStack().push(MainActivity.instance().mSketch.getKeysPlayed().get(MainActivity.instance().mSketch.getKeysPlayed().size() - 1));
+                MainActivity.instance().mSketch.getKeysPlayed().remove(MainActivity.instance().mSketch.getKeysPlayed().size() - 1);
+            }
+        });
+
+        redoButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                MainActivity.instance().mSketch.getKeysPlayed().add(MainActivity.instance().mSketch.getUndoStack().pop());
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                MainActivity.instance().mSketch.clearKeysPlayed();
+            }
+        });
+
     }
 
 }
