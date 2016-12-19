@@ -60,10 +60,6 @@ public class Keyboard
                         sWhiteKeyWidth*6 + sWhiteKeyWidth/2,                     // B
             };
 
-    public enum KeyNames {
-        C, CS, D, Ds, E, F, FS, G, GS, A, AS, B
-    };
-
     /** Returns the matrix to translate a unit quad to the correct position on the keyboard
      * @TODO: Fill this in */
     public float[] getKeyLocalProjectionMatrix(int index)

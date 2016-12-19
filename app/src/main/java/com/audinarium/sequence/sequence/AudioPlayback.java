@@ -4,6 +4,12 @@ import android.content.Context;
 import android.media.SoundPool;
 import android.util.Log;
 
+import com.audinarium.sequence.sequence.Graphics.Chord;
+
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * Created by Volodymyr on 11/24/2016.
  */
@@ -44,6 +50,13 @@ public class AudioPlayback
         sSoundIds[22] = sSoundPool.load(context, R.raw.note_highasharp, 1);
         sSoundIds[23] = sSoundPool.load(context, R.raw.note_highb, 1);
         sSoundIds[24] = sSoundPool.load(context, R.raw.note_highc2, 1);
+    }
+
+    public static void play(Chord q)
+    {
+        play(q.doh.ordinal());
+        play(q.mi.ordinal());
+        play(q.soh.ordinal());
     }
 
     public static void play(int note)

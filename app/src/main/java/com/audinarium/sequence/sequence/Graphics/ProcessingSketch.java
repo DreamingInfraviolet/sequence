@@ -2,6 +2,8 @@ package com.audinarium.sequence.sequence.Graphics;
 
 import com.audinarium.sequence.sequence.AudioPlayback;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 
 /**
@@ -10,6 +12,7 @@ import processing.core.PApplet;
 
 public class ProcessingSketch extends PApplet
 {
+    ArrayList<Chord.KeyNames> mKeysBeingPlayed = new ArrayList<>();
     Keyboard mKeyboard = new Keyboard();
     float mViewOffset = 0.0f;
     float mKeyScaleMultiplier;
@@ -71,10 +74,23 @@ public class ProcessingSketch extends PApplet
                 if(mouseY < h && mouseX > x && mouseX < x+w)
                 {
                     AudioPlayback.play(key);
+                    mKeysBeingPlayed.add(keyIdToName(key));
 
                     return;
                 }
             }
         }
+    }
+
+    Chord.KeyNames keyIdToName(int id)
+    {
+        //id is an index of keys from C to ...
+
+        id = id % 12;
+        return new Chord.KeyNames[]{
+                //Niamh input
+            Chord.KeyNames.C, Chord.KeyNames.CS, Chord.KeyNames.D, Chord.KeyNames.DS, Chord.KeyNames.E, Chord.KeyNames.F,
+                Chord.KeyNames.FS, Chord.KeyNames.G, Chord.KeyNames.GS, Chord.KeyNames.A, Chord.KeyNames.AS, Chord.KeyNames.B
+        }[id];
     }
 }

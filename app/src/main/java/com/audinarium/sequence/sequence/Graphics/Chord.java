@@ -1,0 +1,96 @@
+package com.audinarium.sequence.sequence.Graphics;
+
+import java.util.ArrayList;
+
+import static android.R.attr.name;
+import static android.R.id.list;
+import static android.os.Build.VERSION_CODES.M;
+import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.C;
+
+/**
+ * Created by Niamh on 29/11/2016.
+ */
+
+public class Chord{
+
+    public KeyNames doh, mi, soh;
+
+    public Chord(KeyNames doh_, KeyNames mi_, KeyNames soh_)
+    {
+        doh = doh_;
+        mi = mi_;
+        soh = soh_;
+    }
+
+    public boolean containsKey(KeyNames key)
+    {
+        return doh==key || mi==key || soh==key;
+    }
+
+    public enum KeyNames {
+        C, CS, D, DS, E, F, FS, G, GS, A, AS, B
+    };
+
+    public enum ChordNames{
+        ChordC, ChordCS, ChordD, ChordDS, ChordE, ChordF, ChordFS, ChordG, ChordGS, ChordA, ChordAS, ChordB
+    };
+
+    public static Chord[] sGetChordsWithKeys(KeyNames[] names, Chord[] chordList)
+    {
+        return sGetChordsWithKeys(names, chordList, names.length);
+    }
+
+    /** Returns all chords that contain all of the key names in the chord
+     * @param names An array of keys to search for
+     * @param numberToSucceed Will return a chord if at least numberToSucceed keys are in it.*/
+    public static Chord[] sGetChordsWithKeys(KeyNames[] names, Chord[] chordList, int numberToSucceed)
+    {
+        ArrayList<Chord> output = new ArrayList<>();
+
+        for(Chord c : chordList)
+        {
+            int successes = 0;
+
+            for(int i = 0; i < names.length; ++i)
+                if(c.containsKey(names[i]))
+                    ++successes;
+
+            if(successes >= numberToSucceed)
+                output.add(c);
+        }
+
+        return output.toArray(new Chord[output.size()]);
+    }
+
+    public static Chord sMajor[] = new Chord[]
+            {
+                    new Chord(KeyNames.C, KeyNames.E, KeyNames.G),
+                    new Chord(KeyNames.CS, KeyNames.F, KeyNames.GS),
+                    new Chord(KeyNames.D, KeyNames.FS, KeyNames.A),
+                    new Chord(KeyNames.DS, KeyNames.G, KeyNames.AS),
+                    new Chord(KeyNames.E, KeyNames.GS, KeyNames.B),
+                    new Chord(KeyNames.F, KeyNames.A, KeyNames.C),
+                    new Chord(KeyNames.FS, KeyNames.AS, KeyNames.CS),
+                    new Chord(KeyNames.G, KeyNames.B, KeyNames.D),
+                    new Chord(KeyNames.GS, KeyNames.C, KeyNames.DS),
+                    new Chord(KeyNames.A, KeyNames.CS, KeyNames.E),
+                    new Chord(KeyNames.AS, KeyNames.D, KeyNames.F),
+                    new Chord(KeyNames.B, KeyNames.DS, KeyNames.FS)
+
+            };
+    public static Chord sMinor[] = new Chord[]
+            {
+                    new Chord(KeyNames.C, KeyNames.DS, KeyNames.G),
+                    new Chord(KeyNames.CS, KeyNames.E, KeyNames.GS),
+                    new Chord(KeyNames.D, KeyNames.F, KeyNames.A),
+                    new Chord(KeyNames.DS, KeyNames.FS, KeyNames.AS),
+                    new Chord(KeyNames.E, KeyNames.G, KeyNames.B),
+                    new Chord(KeyNames.F, KeyNames.GS, KeyNames.C),
+                    new Chord(KeyNames.FS, KeyNames.A, KeyNames.CS),
+                    new Chord(KeyNames.G, KeyNames.AS, KeyNames.D),
+                    new Chord(KeyNames.GS, KeyNames.B, KeyNames.DS),
+                    new Chord(KeyNames.A, KeyNames.C, KeyNames.E),
+                    new Chord(KeyNames.AS, KeyNames.CS, KeyNames.F),
+                    new Chord(KeyNames.B, KeyNames.D, KeyNames.FS)
+            };
+}
