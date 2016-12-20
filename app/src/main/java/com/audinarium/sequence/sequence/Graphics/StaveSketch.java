@@ -27,9 +27,9 @@ public class StaveSketch extends PApplet
     int[] notePlayingColour = new int[] {0, 100, 150};
     ArrayList<Chord> mChords;
 
-    enum State {Paused, Playing, Chord};
+    enum State {Start, Paused, Playing, Chord};
 
-    State state = State.Playing;
+    State state = State.Start;
 
     public StaveSketch(ArrayList<Integer> keys)
     {
@@ -148,6 +148,14 @@ public class StaveSketch extends PApplet
         }
     }
 
+    void getChordCentre(float[] output, int chordIndex, float rectH, float xOffset, float yOffset, float barHeight)
+    {
+        float xPosition = xOffset + chordIndex * textWidth(MusicFont.staff5Lines) + textWidth(MusicFont.staff5Lines) / 2.0f;
+        float yPosition = yOffset + barHeight + barHeight / 2 + rectH;
+        output[0] = xPosition;
+        output[1] = yPosition;
+    }
+
     void drawChords(float xOffset, float yOffset, float barHeight)
     {
 
@@ -156,18 +164,17 @@ public class StaveSketch extends PApplet
         float rectW = textWidth(MusicFont.staff5Lines) * 0.9f;
         float rectH = textHeight * 1.4f;
 
-        float yPosition = yOffset + barHeight + barHeight / 2 + rectH;
-
 
         for(int i = 0; i < mChords.size(); ++i)
         {
-            float xPosition = xOffset + i * textWidth(MusicFont.staff5Lines) + textWidth(MusicFont.staff5Lines) / 2.0f;
+            float[] centre = new float[2];
+            getChordCentre(centre, i, rectH, xOffset, yOffset, barHeight);
 
             fill(0, 100, 200);
-            rect(xPosition - rectW / 2, yPosition - rectH / 2, rectW, rectH);
+            rect(centre[0] - rectW / 2, centre[1] - rectH / 2, rectW, rectH);
             fill(0, 0, 0);
             textSize(textHeight);
-            text(mChords.get(i).toString(), xPosition - textWidth(mChords.get(i).toString()) / 2, yPosition + textHeight / 2);
+            text(mChords.get(i).toString(), centre[0] - textWidth(mChords.get(i).toString()) / 2, centre[1] + textHeight / 2);
             textSize(barHeight);
         }
     }
@@ -189,6 +196,9 @@ public class StaveSketch extends PApplet
     @Override
     public void draw()
     {
+        if(state == State.Start)
+            state = State.Playing;
+
         scroll = (scroll + 10) % 1000;
         drawStave();
 
@@ -196,7 +206,12 @@ public class StaveSketch extends PApplet
         {
             if(shouldPlayNote())
             {
-                AudioPlayback.play(mNotes[++notePlayingIndex].keyId);
+                int noteToPlay = ++notePlayingIndex;
+                AudioPlayback.play(mNotes[noteToPlay].keyId);
+
+                if(noteToPlay % 4 == 0)
+                    AudioPlayback.play(mChords.get(noteToPlay / 4));
+
                 timeOfLastNote = System.currentTimeMillis();
             }
         }
