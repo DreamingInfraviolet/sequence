@@ -13,7 +13,6 @@ import com.audinarium.sequence.sequence.Graphics.StaveSketch;
 import processing.android.PFragment;
 import processing.core.PApplet;
 
-
 /**
  * Created by Volodymyr on 12/19/2016.
  */
