@@ -66,33 +66,33 @@ public class Chord{
 
     public static Chord sMajor[] = new Chord[]
             {
-                    new Chord(KeyNames.C, KeyNames.E, KeyNames.G, "C Major"),
-                    new Chord(KeyNames.CS, KeyNames.F, KeyNames.GS, "C#/D♭ Major"),
-                    new Chord(KeyNames.D, KeyNames.FS, KeyNames.A, "D Major"),
-                    new Chord(KeyNames.DS, KeyNames.G, KeyNames.AS, "D#/E♭ Major"),
-                    new Chord(KeyNames.E, KeyNames.GS, KeyNames.B, "E Major" ),
-                    new Chord(KeyNames.F, KeyNames.A, KeyNames.C, "F Major"),
-                    new Chord(KeyNames.FS, KeyNames.AS, KeyNames.CS, "F#/G♭ Major"),
-                    new Chord(KeyNames.G, KeyNames.B, KeyNames.D, "G Major"),
-                    new Chord(KeyNames.GS, KeyNames.C, KeyNames.DS, "G#/A♭ Major"),
-                    new Chord(KeyNames.A, KeyNames.CS, KeyNames.E, "A Major"),
-                    new Chord(KeyNames.AS, KeyNames.D, KeyNames.F, "A#/B♭ Major"),
-                    new Chord(KeyNames.B, KeyNames.DS, KeyNames.FS, "B Major")
+                    new Chord(KeyNames.C, KeyNames.E, KeyNames.G, "C"),
+                    new Chord(KeyNames.CS, KeyNames.F, KeyNames.GS, "C#/D♭"),
+                    new Chord(KeyNames.D, KeyNames.FS, KeyNames.A, "D"),
+                    new Chord(KeyNames.DS, KeyNames.G, KeyNames.AS, "D#/E♭"),
+                    new Chord(KeyNames.E, KeyNames.GS, KeyNames.B, "E" ),
+                    new Chord(KeyNames.F, KeyNames.A, KeyNames.C, "F"),
+                    new Chord(KeyNames.FS, KeyNames.AS, KeyNames.CS, "F#/G♭"),
+                    new Chord(KeyNames.G, KeyNames.B, KeyNames.D, "G"),
+                    new Chord(KeyNames.GS, KeyNames.C, KeyNames.DS, "G#/A♭"),
+                    new Chord(KeyNames.A, KeyNames.CS, KeyNames.E, "A"),
+                    new Chord(KeyNames.AS, KeyNames.D, KeyNames.F, "A#/B♭"),
+                    new Chord(KeyNames.B, KeyNames.DS, KeyNames.FS, "B")
 
             };
     public static Chord sMinor[] = new Chord[]
             {
-                    new Chord(KeyNames.C, KeyNames.DS, KeyNames.G, "C Minor"),
-                    new Chord(KeyNames.CS, KeyNames.E, KeyNames.GS, "C#/D♭ Minor"),
-                    new Chord(KeyNames.D, KeyNames.F, KeyNames.A, "D Minor"),
-                    new Chord(KeyNames.DS, KeyNames.FS, KeyNames.AS, "D#/E♭ Minor"),
-                    new Chord(KeyNames.E, KeyNames.G, KeyNames.B, "E Minor"),
-                    new Chord(KeyNames.F, KeyNames.GS, KeyNames.C, "F Minor"),
-                    new Chord(KeyNames.FS, KeyNames.A, KeyNames.CS, "F#/G♭ Minor"),
-                    new Chord(KeyNames.G, KeyNames.AS, KeyNames.D, "G Minor"),
-                    new Chord(KeyNames.GS, KeyNames.B, KeyNames.DS, "G#/A♭ Minor"),
-                    new Chord(KeyNames.A, KeyNames.C, KeyNames.E, "A Minor"),
-                    new Chord(KeyNames.AS, KeyNames.CS, KeyNames.F, "A#/B♭ Minor"),
-                    new Chord(KeyNames.B, KeyNames.D, KeyNames.FS, "B Minor")
+                    new Chord(KeyNames.C, KeyNames.DS, KeyNames.G, "Cm"),
+                    new Chord(KeyNames.CS, KeyNames.E, KeyNames.GS, "C#/D♭m"),
+                    new Chord(KeyNames.D, KeyNames.F, KeyNames.A, "Dm"),
+                    new Chord(KeyNames.DS, KeyNames.FS, KeyNames.AS, "D#/E♭m"),
+                    new Chord(KeyNames.E, KeyNames.G, KeyNames.B, "Em"),
+                    new Chord(KeyNames.F, KeyNames.GS, KeyNames.C, "Fm"),
+                    new Chord(KeyNames.FS, KeyNames.A, KeyNames.CS, "F#/G♭m"),
+                    new Chord(KeyNames.G, KeyNames.AS, KeyNames.D, "Gm"),
+                    new Chord(KeyNames.GS, KeyNames.B, KeyNames.DS, "G#/A♭m"),
+                    new Chord(KeyNames.A, KeyNames.C, KeyNames.E, "Am"),
+                    new Chord(KeyNames.AS, KeyNames.CS, KeyNames.F, "A#/B♭m"),
+                    new Chord(KeyNames.B, KeyNames.D, KeyNames.FS, "Bm")
             };
 }

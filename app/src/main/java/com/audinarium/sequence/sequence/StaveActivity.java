@@ -12,6 +12,8 @@ import com.audinarium.sequence.sequence.Graphics.StaveSketch;
 import processing.android.PFragment;
 import processing.core.PApplet;
 
+import static com.audinarium.sequence.sequence.R.id.backToKeyboard;
+
 /**
  * Created by Volodymyr on 12/19/2016.
  */
@@ -33,6 +35,10 @@ public class StaveActivity extends AppCompatActivity
                 .replace(R.id.stave_layout, fragment)
                 .commit();
 
+        boolean playButtonClicked = false;
+
+        //Button playButton = (Button)findViewById(R.id.playButton);
+        //Button stopButton = (Button)findViewById(R.id.stopButton);
         Button backToKeyboard = (Button)findViewById(R.id.backToKeyboard);
 
         backToKeyboard.setOnClickListener(new View.OnClickListener()
@@ -44,5 +50,21 @@ public class StaveActivity extends AppCompatActivity
                 startActivity(new Intent(StaveActivity.this, MainActivity.class));
             }
         });
+        /**playButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
+        stopButton.setOnClickListener(new View.OnClickListener()
+        {
+            @
+            public void onClick(View v)
+            {
+
+            }
+        });**/
     }
 }
