@@ -67,6 +67,11 @@ public class StaveSketch extends PApplet
         }
     }
 
+    float getKeyOffset(int playIndex)
+    {
+        return stepX - textWidth(MusicFont.staff5Lines) / 8.0f + playIndex * stepX;
+    }
+
     /**
      * @param notes An array of note indices. Index 0 is middle C, index 1 is C#, etc. */
     void drawNotes(Note[] notes, float xOffset, float yOffset, float barHeight)
@@ -83,7 +88,7 @@ public class StaveSketch extends PApplet
 
             Note note = notes[i];
 
-            float x = xOffset + stepX - textWidth(MusicFont.staff5Lines) / 8.0f + i * stepX;
+            float x = xOffset + getKeyOffset(i);
             float y = startY - stepY * (note.index);
 
             text((note.index >= 6) ? MusicFont.quarterNoteDown : MusicFont.quarterNoteUp, x, y);
@@ -139,12 +144,32 @@ public class StaveSketch extends PApplet
             fill(60, 60, 60);
             drawBars(nBars, xOffset, yOffset, barHeight);
             drawNotes(mNotes, xOffset, yOffset, barHeight);
+            drawChords(xOffset, yOffset, barHeight);
         }
     }
 
-    void drawChords()
+    void drawChords(float xOffset, float yOffset, float barHeight)
     {
 
+        float textHeight = barHeight / 2.0f;
+
+        float rectW = textWidth(MusicFont.staff5Lines) * 0.9f;
+        float rectH = textHeight * 1.4f;
+
+        float yPosition = yOffset + barHeight + barHeight / 2 + rectH;
+
+
+        for(int i = 0; i < mChords.size(); ++i)
+        {
+            float xPosition = xOffset + i * textWidth(MusicFont.staff5Lines) + textWidth(MusicFont.staff5Lines) / 2.0f;
+
+            fill(0, 100, 200);
+            rect(xPosition - rectW / 2, yPosition - rectH / 2, rectW, rectH);
+            fill(0, 0, 0);
+            textSize(textHeight);
+            text(mChords.get(i).toString(), xPosition - textWidth(mChords.get(i).toString()) / 2, yPosition + textHeight / 2);
+            textSize(barHeight);
+        }
     }
 
     long timeSinceLastNote()

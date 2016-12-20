@@ -447,7 +447,7 @@ public class NotesPlayed {
                 }
                 //This is for if there are only 2 notes from a chord in the same bar
 
-                if(c && e || c && g)
+                else if(c && e || c && g)
                 {
                     chordOutput.add(Chord.sMajor[Chord.ChordNames.ChordC.ordinal()]);
                 }
