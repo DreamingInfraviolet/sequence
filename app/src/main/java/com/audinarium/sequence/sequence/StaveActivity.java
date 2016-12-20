@@ -36,7 +36,7 @@ public class StaveActivity extends AppCompatActivity
 
         boolean playButtonClicked = false;
 
-        ImageButton playButton = (ImageButton)findViewById(R.id.play);
+        final ImageButton playButton = (ImageButton)findViewById(R.id.play);
         ImageButton stopButton = (ImageButton) findViewById(R.id.stop);
 
         playButton.setOnClickListener(new View.OnClickListener()
