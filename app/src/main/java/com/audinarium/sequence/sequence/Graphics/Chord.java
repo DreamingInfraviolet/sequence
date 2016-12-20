@@ -24,6 +24,12 @@ public class Chord{
         name = name_;
     }
 
+    @Override
+    public String toString()
+    {
+        return name;
+    }
+
     public boolean containsKey(KeyNames key)
     {
         return doh==key || mi==key || soh==key;
