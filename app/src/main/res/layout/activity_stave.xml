@@ -10,7 +10,8 @@
 
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="62dp"
+        android:gravity="center_horizontal">
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
