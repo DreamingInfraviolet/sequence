@@ -1,5 +1,7 @@
 package com.audinarium.sequence.sequence.Graphics;
 
+import android.util.Log;
+
 import com.audinarium.sequence.sequence.AudioPlayback;
 import com.audinarium.sequence.sequence.MusicFont;
 import com.audinarium.sequence.sequence.Note;
@@ -21,15 +23,35 @@ public class StaveSketch extends PApplet
     int barHeight;
     int scroll = 0;
     int notePlayingIndex = -1;
+    float currentLookCentre = notePlayingIndex;
+    float desiredLookCentre = notePlayingIndex;
     long timeOfLastNote = -1;
     Note[] mNotes = null;
     float stepX;
     int[] notePlayingColour = new int[] {0, 100, 150};
     ArrayList<Chord> mChords;
+    float textHeight;
+    int yOffset = 40;
 
-    enum State {Start, Paused, Playing, Chord};
+    boolean shouldFollowPlayingIndex = false;
+
+    enum State {Start, Paused, Playing, End};
 
     State state = State.Start;
+
+    void startPlayback()
+    {
+        shouldFollowPlayingIndex = true;
+        if(state == State.End)
+            notePlayingIndex = -1;
+        state = State.Playing;
+    }
+
+    void pausePlayback()
+    {
+        shouldFollowPlayingIndex = false;
+        state = State.Paused;
+    }
 
     public StaveSketch(ArrayList<Integer> keys)
     {
@@ -47,15 +69,15 @@ public class StaveSketch extends PApplet
         mChords = np.recorded(npIn);
     }
 
-    void drawBars(int n, float xOffset, float yOffset, float h)
+    void drawBars(int n, float xOffset, float yOffset)
     {
         float step = textWidth(MusicFont.staff5Lines);
-        float y = yOffset + h;
+        float y = yOffset + barHeight;
 
         text(MusicFont.barlineSingle, xOffset, y);
 
-        text(MusicFont.timeSignature4, xOffset, y - h / 8.0f * 2);
-        text(MusicFont.timeSignature4, xOffset, y - h / 8.0f * 6);
+        text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 2);
+        text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 6);
 
         for (int i = 0; i < n; ++i)
         {
@@ -74,7 +96,7 @@ public class StaveSketch extends PApplet
 
     /**
      * @param notes An array of note indices. Index 0 is middle C, index 1 is C#, etc. */
-    void drawNotes(Note[] notes, float xOffset, float yOffset, float barHeight)
+    void drawNotes(Note[] notes, float xOffset, float yOffset)
     {
         float stepY = barHeight / 8.0f;
         float startY = yOffset + barHeight + stepY * 2;
@@ -113,6 +135,7 @@ public class StaveSketch extends PApplet
     public void setup()
     {
         barHeight = height / 4;
+        textHeight = barHeight / 2;
         musicFont = createFont("Bravura.otf", barHeight);
         textFont(musicFont);
         textSize(barHeight);
@@ -120,14 +143,9 @@ public class StaveSketch extends PApplet
         frameRate(60);
     }
 
-    float getRelativePlayBarPosition()
-    {
-        return notePlayingIndex * stepX;
-    }
-
     float getXOffset()
     {
-        float barPos = getRelativePlayBarPosition();
+        float barPos = currentLookCentre;
         float xOffset = width / 2 - barPos;
         return xOffset;
     }
@@ -138,17 +156,16 @@ public class StaveSketch extends PApplet
 
         {
             int xOffset = (int)getXOffset();
-            int yOffset = 40;
 
             background(255, 255, 255);
             fill(60, 60, 60);
-            drawBars(nBars, xOffset, yOffset, barHeight);
-            drawNotes(mNotes, xOffset, yOffset, barHeight);
+            drawBars(nBars, xOffset, yOffset);
+            drawNotes(mNotes, xOffset, yOffset);
             drawChords(xOffset, yOffset, barHeight);
         }
     }
 
-    void getChordCentre(float[] output, int chordIndex, float rectH, float xOffset, float yOffset, float barHeight)
+    void getChordCentre(float[] output, int chordIndex, float rectH, float xOffset)
     {
         float xPosition = xOffset + chordIndex * textWidth(MusicFont.staff5Lines) + textWidth(MusicFont.staff5Lines) / 2.0f;
         float yPosition = yOffset + barHeight + barHeight / 2 + rectH;
@@ -156,25 +173,43 @@ public class StaveSketch extends PApplet
         output[1] = yPosition;
     }
 
-    void drawChords(float xOffset, float yOffset, float barHeight)
+    float[][] getChordCentres(float xOffset)
     {
-
-        float textHeight = barHeight / 2.0f;
+        float[][] output = new float[mChords.size()][4];
 
         float rectW = textWidth(MusicFont.staff5Lines) * 0.9f;
         float rectH = textHeight * 1.4f;
 
-
         for(int i = 0; i < mChords.size(); ++i)
         {
             float[] centre = new float[2];
-            getChordCentre(centre, i, rectH, xOffset, yOffset, barHeight);
+            getChordCentre(centre, i, rectH, xOffset);
+
+            output[i][0] = centre[0];
+            output[i][1] = centre[1];
+            output[i][2] = rectW;
+            output[i][3] = rectH;
+        }
+
+        return output;
+    }
+
+    void drawChords(float xOffset, float yOffset, float barHeight)
+    {
+        float[][] chordCentres = getChordCentres(xOffset);
+
+        for(int i = 0; i < chordCentres.length; ++i)
+        {
+            float x = chordCentres[i][0];
+            float y = chordCentres[i][1];
+            float w = chordCentres[i][2];
+            float h = chordCentres[i][3];
 
             fill(0, 100, 200);
-            rect(centre[0] - rectW / 2, centre[1] - rectH / 2, rectW, rectH);
+            rect(x - w / 2, y  - h / 2, w, h);
             fill(0, 0, 0);
             textSize(textHeight);
-            text(mChords.get(i).toString(), centre[0] - textWidth(mChords.get(i).toString()) / 2, centre[1] + textHeight / 2);
+            text(mChords.get(i).toString(), x - textWidth(mChords.get(i).toString()) / 2, y + textHeight / 2);
             textSize(barHeight);
         }
     }
@@ -197,7 +232,11 @@ public class StaveSketch extends PApplet
     public void draw()
     {
         if(state == State.Start)
-            state = State.Playing;
+            startPlayback();
+
+        // Move towards target position
+        float lerpAlpha = 0.8f;
+        currentLookCentre = (lerpAlpha) * desiredLookCentre + (1-lerpAlpha) * currentLookCentre;
 
         scroll = (scroll + 10) % 1000;
         drawStave();
@@ -214,6 +253,41 @@ public class StaveSketch extends PApplet
 
                 timeOfLastNote = System.currentTimeMillis();
             }
+
+            // No more notes to play
+            if(!(notePlayingIndex + 1 < mNotes.length))
+                pausePlayback();
+
+            if(shouldFollowPlayingIndex)
+                desiredLookCentre = notePlayingIndex * stepX;
         }
+    }
+
+    @Override
+    public void mousePressed()
+    {
+        float[][] chordCentres = getChordCentres(getXOffset());
+
+        for(int i = 0; i < chordCentres.length; ++i)
+        {
+            float x = chordCentres[i][0];
+            float y = chordCentres[i][1];
+            float w = chordCentres[i][2];
+            float h = chordCentres[i][3];
+
+            if(mouseX > (x - w / 2) && mouseX < (x + w / 2)
+            && mouseY > (y  - h / 2) && mouseY <  (y + h / 2))
+            {
+                Log.i("Meep", "Clicked on " + mChords.get(i).toString() + " chord");
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void mouseDragged()
+    {
+        shouldFollowPlayingIndex = false;
+        desiredLookCentre -= mouseX - pmouseX;
     }
 }

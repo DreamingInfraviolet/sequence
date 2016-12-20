@@ -13,8 +13,6 @@ import com.audinarium.sequence.sequence.Graphics.StaveSketch;
 import processing.android.PFragment;
 import processing.core.PApplet;
 
-import static com.audinarium.sequence.sequence.R.id.backToKeyboard;
-
 /**
  * Created by Volodymyr on 12/19/2016.
  */
