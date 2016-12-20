@@ -1,8 +1,7 @@
 package com.audinarium.sequence.sequence.Graphics;
 
-import com.audinarium.sequence.sequence.Graphics.Chord.KeyNames;
+import com.audinarium.sequence.sequence.AudioPlayback;
 
-import java.security.Key;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -12,13 +11,13 @@ import processing.core.PFont;
  * Created by Volodymyr on 12/19/2016.
  */
 
-
 class Note
 {
     enum Offset {None, Sharp, Flat};
 
     /** Index of the note, starting from middle C. */
     public int index;
+    public int keyId;
 
     Offset offset;
 
@@ -31,8 +30,9 @@ class Note
         this.index = index;
     }
 
-    public Note(int index, Offset offset)
+    public Note(int keyId, int index, Offset offset)
     {
+        this.keyId = keyId;
         this.index = index;
         this.offset = offset;
     }
@@ -47,7 +47,7 @@ class Note
 
         noteIndex += octave * 7;
 
-        return new Note(noteIndex, offset);
+        return new Note(id, noteIndex, offset);
     }
 }
 
@@ -70,7 +70,13 @@ public class StaveSketch extends PApplet
     PFont musicFont;
     int barHeight;
     int scroll = 0;
+    int notePlayingIndex = -1;
+    long timeOfLastNote = -1;
     Note[] mNotes = null;
+
+    enum State {Paused, Playing, Chord};
+
+    State state = State.Playing;
 
     public StaveSketch(ArrayList<Integer> keys)
     {
@@ -142,24 +148,61 @@ public class StaveSketch extends PApplet
         musicFont = createFont("Bravura.otf", barHeight);
         textFont(musicFont);
         textSize(barHeight);
-        frameRate(30);
+        frameRate(60);
+    }
 
+    void drawPlayBar(int xOffset, int yOffset, int barHeight)
+    {
+        float stepX = textWidth(MusicFont.staff5Lines) / 4.0f;
+        rect(xOffset + notePlayingIndex * stepX, yOffset, barHeight, 4);
+    }
+
+    void drawStave()
+    {
+        int nBars = mNotes.length / 4 + (mNotes.length % 4 == 0 ? 0 : 1);
+
+        {
+            int xOffset = 10 - scroll;
+            int yOffset = 40;
+
+            background(255, 255, 255);
+            fill(60, 60, 60);
+            drawBars(nBars, xOffset, yOffset, barHeight);
+            fill(0, 0, 0);
+            drawNotes(mNotes, xOffset, yOffset, barHeight);
+            fill(0, 40, 200);
+            drawPlayBar(xOffset, yOffset, barHeight);
+        }
+    }
+
+
+    long timeSinceLastNote()
+    {
+        return System.currentTimeMillis() - timeOfLastNote;
+    }
+
+
+    boolean shouldPlayNote()
+    {
+        // If notes remain, state is playing, and last played 1/4th of a second ago
+        return notePlayingIndex + 1 < mNotes.length
+                && state == State.Playing
+                && timeSinceLastNote() >= 250;
     }
 
     @Override
     public void draw()
     {
-        int nBars = mNotes.length / 4 + (mNotes.length % 4 == 0 ? 0 : 1);
-
         scroll = (scroll + 10) % 1000;
-        {
-            int xOffset = 10 - scroll;
+        drawStave();
 
-            background(255, 255, 255);
-            fill(60, 60, 60);
-            drawBars(nBars, xOffset, 40, barHeight);
-            fill(0, 0, 0);
-            drawNotes(mNotes, xOffset, 40, barHeight);
+        if(state == State.Playing)
+        {
+            if(shouldPlayNote())
+            {
+                AudioPlayback.play(mNotes[++notePlayingIndex].keyId);
+                timeOfLastNote = System.currentTimeMillis();
+            }
         }
     }
 }
