@@ -1,0 +1,45 @@
+package com.audinarium.sequence.sequence;
+
+/**
+ * Created by Volodymyr on 12/20/2016.
+ */
+
+public class Note
+{
+    public enum Offset {None, Sharp, Flat};
+
+    /** Index of the note, starting from middle C. */
+    public int index;
+    public int keyId;
+
+    public Offset offset;
+
+    public Note()
+    {
+    }
+
+    public Note(int index)
+    {
+        this.index = index;
+    }
+
+    public Note(int keyId, int index, Offset offset)
+    {
+        this.keyId = keyId;
+        this.index = index;
+        this.offset = offset;
+    }
+
+    public static Note fromKeyId(int id)
+    {
+        int octave = id / 12;
+        int key = id % 12;
+
+        int noteIndex = new int[]{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}[key];
+        Offset offset = (key == 1 || key == 3 || key == 6 || key == 8 || key == 10) ? Offset.Sharp : Offset.None;
+
+        noteIndex += octave * 7;
+
+        return new Note(id, noteIndex, offset);
+    }
+}

@@ -1,6 +1,8 @@
 package com.audinarium.sequence.sequence.Graphics;
 
 import com.audinarium.sequence.sequence.AudioPlayback;
+import com.audinarium.sequence.sequence.MusicFont;
+import com.audinarium.sequence.sequence.Note;
 import com.audinarium.sequence.sequence.NotesPlayed;
 
 import java.lang.reflect.Array;
@@ -12,60 +14,6 @@ import processing.core.PFont;
 /**
  * Created by Volodymyr on 12/19/2016.
  */
-
-class Note
-{
-    enum Offset {None, Sharp, Flat};
-
-    /** Index of the note, starting from middle C. */
-    public int index;
-    public int keyId;
-
-    Offset offset;
-
-    public Note()
-    {
-    }
-
-    public Note(int index)
-    {
-        this.index = index;
-    }
-
-    public Note(int keyId, int index, Offset offset)
-    {
-        this.keyId = keyId;
-        this.index = index;
-        this.offset = offset;
-    }
-
-    public static Note fromKeyId(int id)
-    {
-        int octave = id / 12;
-        int key = id % 12;
-
-        int noteIndex = new int[]{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}[key];
-        Offset offset = (key == 1 || key == 3 || key == 6 || key == 8 || key == 10) ? Offset.Sharp : Offset.None;
-
-        noteIndex += octave * 7;
-
-        return new Note(id, noteIndex, offset);
-    }
-}
-
-class MusicFont
-{
-    public final static String clef = "\uE050";
-    public final static String barlineSingle = "\uE030";
-    public final static String barlineFinal = "\uE032";
-    public final static String staff5Lines = "\uE014\uE014\uE014\uE014\uE014\uE014\uE014\uE014";
-    public final static String quarterNoteDown = "\uE1D6";
-    public final static String quarterNoteUp = "\uE1D5";
-    public final static String ledgerLine = "\uE022";
-    public final static String accidentalFlat = "\uE260";
-    public final static String accidentalSharp = "\uE262";
-    public final static String timeSignature4 = "\uE084";
-}
 
 public class StaveSketch extends PApplet
 {
