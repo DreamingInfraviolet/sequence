@@ -15,6 +15,7 @@ import processing.core.PFont;
 
 /**
  * Created by Volodymyr on 12/19/2016.
+ * I am embarrassed to have written it. BUT IT WORKS.
  */
 
 public class StaveSketch extends PApplet
@@ -34,6 +35,7 @@ public class StaveSketch extends PApplet
     int yOffset = 40;
 
     boolean shouldFollowPlayingIndex = false;
+    Chord chordToShow = null;
 
     enum State {Start, Paused, Playing, End};
 
@@ -74,10 +76,16 @@ public class StaveSketch extends PApplet
         float step = textWidth(MusicFont.staff5Lines);
         float y = yOffset + barHeight;
 
+        if(chordToShow != null)
+            text(MusicFont.bass, xOffset - textWidth(MusicFont.bass), y - barHeight / 2.0f);
+        else
+        {
+            text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 2);
+            text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 6);
+        }
+        
         text(MusicFont.barlineSingle, xOffset, y);
 
-        text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 2);
-        text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 6);
 
         for (int i = 0; i < n; ++i)
         {
@@ -145,6 +153,9 @@ public class StaveSketch extends PApplet
 
     float getXOffset()
     {
+        if(chordToShow != null)
+            return textWidth(MusicFont.bass) + textWidth(MusicFont.bass) / 10;
+
         float barPos = currentLookCentre;
         float xOffset = width / 2 - barPos;
         return xOffset;
@@ -152,16 +163,31 @@ public class StaveSketch extends PApplet
 
     void drawStave()
     {
-        int nBars = mNotes.length / 4 + (mNotes.length % 4 == 0 ? 0 : 1);
 
         {
-            int xOffset = (int)getXOffset();
-
             background(255, 255, 255);
             fill(60, 60, 60);
+
+            int xOffset = (int)getXOffset();
+            int nBars;
+            Note[] notes;
+
+            if(chordToShow == null)
+            {
+                nBars = chordToShow == null ? (mNotes.length / 4 + (mNotes.length % 4 == 0 ? 0 : 1)) : 1;
+                notes = mNotes;
+            }
+            else
+            {
+                nBars = 1;
+                notes = new Note[]{Note.fromKeyName(chordToShow.doh), Note.fromKeyName(chordToShow.mi), Note.fromKeyName(chordToShow.soh)};
+            }
+
             drawBars(nBars, xOffset, yOffset);
-            drawNotes(mNotes, xOffset, yOffset);
-            drawChords(xOffset, yOffset, barHeight);
+            drawNotes(notes, xOffset, yOffset);
+
+            if(chordToShow == null)
+                drawChords(xOffset, yOffset, barHeight);
         }
     }
 
@@ -231,17 +257,21 @@ public class StaveSketch extends PApplet
     @Override
     public void draw()
     {
-        if(state == State.Start)
-            startPlayback();
+        if(chordToShow == null)
+        {
+            if (state == State.Start)
+                startPlayback();
 
-        // Move towards target position
-        float lerpAlpha = 0.8f;
-        currentLookCentre = (lerpAlpha) * desiredLookCentre + (1-lerpAlpha) * currentLookCentre;
+            // Move towards target position
+            float lerpAlpha = 0.8f;
+            currentLookCentre = (lerpAlpha) * desiredLookCentre + (1 - lerpAlpha) * currentLookCentre;
 
-        scroll = (scroll + 10) % 1000;
+            scroll = (scroll + 10) % 1000;
+        }
+
         drawStave();
 
-        if(state == State.Playing)
+        if(chordToShow == null && state == State.Playing)
         {
             if(shouldPlayNote())
             {
@@ -266,20 +296,26 @@ public class StaveSketch extends PApplet
     @Override
     public void mousePressed()
     {
-        float[][] chordCentres = getChordCentres(getXOffset());
-
-        for(int i = 0; i < chordCentres.length; ++i)
+        // If user tapped while chord was showing, close it
+        if(chordToShow != null)
+            chordToShow = null;
+        else
         {
-            float x = chordCentres[i][0];
-            float y = chordCentres[i][1];
-            float w = chordCentres[i][2];
-            float h = chordCentres[i][3];
+            float[][] chordCentres = getChordCentres(getXOffset());
 
-            if(mouseX > (x - w / 2) && mouseX < (x + w / 2)
-            && mouseY > (y  - h / 2) && mouseY <  (y + h / 2))
+            for (int i = 0; i < chordCentres.length; ++i)
             {
-                Log.i("Meep", "Clicked on " + mChords.get(i).toString() + " chord");
-                break;
+                float x = chordCentres[i][0];
+                float y = chordCentres[i][1];
+                float w = chordCentres[i][2];
+                float h = chordCentres[i][3];
+
+                if (mouseX > (x - w / 2) && mouseX < (x + w / 2)
+                        && mouseY > (y - h / 2) && mouseY < (y + h / 2))
+                {
+                    chordToShow = mChords.get(i);
+                    break;
+                }
             }
         }
     }

@@ -1,5 +1,9 @@
 package com.audinarium.sequence.sequence;
 
+import com.audinarium.sequence.sequence.Graphics.Chord;
+
+import java.util.Collection;
+
 /**
  * Created by Volodymyr on 12/20/2016.
  */
@@ -41,5 +45,10 @@ public class Note
         noteIndex += octave * 7;
 
         return new Note(id, noteIndex, offset);
+    }
+
+    public static Note fromKeyName(Chord.KeyNames name)
+    {
+        return fromKeyId(name.ordinal());
     }
 }
