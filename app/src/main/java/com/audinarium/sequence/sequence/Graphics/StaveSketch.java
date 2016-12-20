@@ -73,6 +73,8 @@ public class StaveSketch extends PApplet
     int notePlayingIndex = -1;
     long timeOfLastNote = -1;
     Note[] mNotes = null;
+    float stepX;
+    int[] notePlayingColour = new int[] {0, 100, 150};
 
     enum State {Paused, Playing, Chord};
 
@@ -113,11 +115,15 @@ public class StaveSketch extends PApplet
     void drawNotes(Note[] notes, float xOffset, float yOffset, float barHeight)
     {
         float stepY = barHeight / 8.0f;
-        float stepX = textWidth(MusicFont.staff5Lines) / 4.0f;
         float startY = yOffset + barHeight + stepY * 2;
 
         for (int i = 0; i < notes.length; ++i)
         {
+            if(i == notePlayingIndex)
+                fill(notePlayingColour[0], notePlayingColour[1], notePlayingColour[2]);
+            else
+                fill(0, 0, 0);
+
             Note note = notes[i];
 
             float x = xOffset + stepX - textWidth(MusicFont.staff5Lines) / 8.0f + i * stepX;
@@ -144,17 +150,24 @@ public class StaveSketch extends PApplet
     @Override
     public void setup()
     {
-        barHeight = height / 3;
+        barHeight = height / 4;
         musicFont = createFont("Bravura.otf", barHeight);
         textFont(musicFont);
         textSize(barHeight);
+        stepX = textWidth(MusicFont.staff5Lines) / 4.0f;
         frameRate(60);
     }
 
-    void drawPlayBar(int xOffset, int yOffset, int barHeight)
+    float getRelativePlayBarPosition()
     {
-        float stepX = textWidth(MusicFont.staff5Lines) / 4.0f;
-        rect(xOffset + notePlayingIndex * stepX, yOffset, barHeight, 4);
+        return notePlayingIndex * stepX;
+    }
+
+    float getXOffset()
+    {
+        float barPos = getRelativePlayBarPosition();
+        float xOffset = width / 2 - barPos;
+        return xOffset;
     }
 
     void drawStave()
@@ -162,16 +175,13 @@ public class StaveSketch extends PApplet
         int nBars = mNotes.length / 4 + (mNotes.length % 4 == 0 ? 0 : 1);
 
         {
-            int xOffset = 10 - scroll;
+            int xOffset = (int)getXOffset();
             int yOffset = 40;
 
             background(255, 255, 255);
             fill(60, 60, 60);
             drawBars(nBars, xOffset, yOffset, barHeight);
-            fill(0, 0, 0);
             drawNotes(mNotes, xOffset, yOffset, barHeight);
-            fill(0, 40, 200);
-            drawPlayBar(xOffset, yOffset, barHeight);
         }
     }
 
