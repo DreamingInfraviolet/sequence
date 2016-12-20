@@ -1,7 +1,9 @@
 package com.audinarium.sequence.sequence.Graphics;
 
 import com.audinarium.sequence.sequence.AudioPlayback;
+import com.audinarium.sequence.sequence.NotesPlayed;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import processing.core.PApplet;
@@ -75,6 +77,7 @@ public class StaveSketch extends PApplet
     Note[] mNotes = null;
     float stepX;
     int[] notePlayingColour = new int[] {0, 100, 150};
+    ArrayList<Chord> mChords;
 
     enum State {Paused, Playing, Chord};
 
@@ -88,6 +91,12 @@ public class StaveSketch extends PApplet
         {
             mNotes[i] = Note.fromKeyId(keys.get(i));
         }
+
+        NotesPlayed np = new NotesPlayed();
+        ArrayList<Chord.KeyNames> npIn = new ArrayList<>();
+        for(int k : keys)
+            npIn.add(Chord.keyIdToName(k));
+        mChords = np.recorded(npIn);
     }
 
     void drawBars(int n, float xOffset, float yOffset, float h)
