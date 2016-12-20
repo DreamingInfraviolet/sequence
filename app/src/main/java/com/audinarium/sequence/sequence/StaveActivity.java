@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.audinarium.sequence.sequence.Graphics.StaveSketch;
 
@@ -37,20 +38,10 @@ public class StaveActivity extends AppCompatActivity
 
         boolean playButtonClicked = false;
 
-        //Button playButton = (Button)findViewById(R.id.playButton);
-        //Button stopButton = (Button)findViewById(R.id.stopButton);
-        Button backToKeyboard = (Button)findViewById(R.id.backToKeyboard);
+        ImageButton playButton = (ImageButton)findViewById(R.id.play);
+        ImageButton stopButton = (ImageButton) findViewById(R.id.stop);
 
-        backToKeyboard.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                MainActivity.instance().mSketch.clearKeysPlayed();
-                startActivity(new Intent(StaveActivity.this, MainActivity.class));
-            }
-        });
-        /**playButton.setOnClickListener(new View.OnClickListener()
+        playButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -60,11 +51,11 @@ public class StaveActivity extends AppCompatActivity
         });
         stopButton.setOnClickListener(new View.OnClickListener()
         {
-            @
             public void onClick(View v)
             {
-
+                MainActivity.instance().mSketch.clearKeysPlayed();
+                startActivity(new Intent(StaveActivity.this, MainActivity.class));
             }
-        });**/
+        });
     }
 }

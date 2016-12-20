@@ -7,22 +7,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.audinarium.sequence.sequence.MainActivity" >
-    <Button
-        android:text="Close"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/backToKeyboard"/>
 
     <FrameLayout android:id="@+id/stave_layout"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent" >
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/play"
-            android:id="@+id/playButton"
-            android:background="@null"/>
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:maxHeight="60dp"
+                android:maxWidth="60dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/play"
+                android:background="@null"
+                android:id="@+id/play" />
+
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:maxHeight="60dp"
+                android:maxWidth="60dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/stop"
+                android:background="@null"
+                android:id="@+id/stop" />
+
+        </LinearLayout>
+
     </FrameLayout>
 
 </LinearLayout>
