@@ -95,4 +95,19 @@ public class Chord{
                     new Chord(KeyNames.AS, KeyNames.CS, KeyNames.F, "A#/B♭m"),
                     new Chord(KeyNames.B, KeyNames.D, KeyNames.FS, "Bm")
             };
+
+
+
+
+    public static Chord.KeyNames keyIdToName(int id)
+    {
+        //id is an index of keys from C to ...
+
+        id = id % 12;
+        return new Chord.KeyNames[]{
+                //Niamh input
+                Chord.KeyNames.C, Chord.KeyNames.CS, Chord.KeyNames.D, Chord.KeyNames.DS, Chord.KeyNames.E, Chord.KeyNames.F,
+                Chord.KeyNames.FS, Chord.KeyNames.G, Chord.KeyNames.GS, Chord.KeyNames.A, Chord.KeyNames.AS, Chord.KeyNames.B
+        }[id];
+    }
 }

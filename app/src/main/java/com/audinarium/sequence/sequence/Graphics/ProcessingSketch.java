@@ -17,6 +17,7 @@ import processing.core.PApplet;
 
 public class ProcessingSketch extends PApplet
 {
+    final int primaryColourR = 0, primaryColourG = 70, primaryColourB  = 140;
     ArrayList<Integer> mKeysBeingPlayed = new ArrayList<>();
     Keyboard mKeyboard = new Keyboard();
     float mViewOffset = 0.0f;
@@ -67,13 +68,49 @@ public class ProcessingSketch extends PApplet
                 float h = mKeyboard.getKeyHeight(key) * height;
                 float x = mKeyboard.getKeyPosition(key) * mKeyScaleMultiplier;
 
-                this.fill(mKeyboard.isKeyWhite(key) ? 255 : 0);
+                int[] keyColour = getKeyColour(key);
+                this.fill(keyColour[0], keyColour[1], keyColour[2]);
 
                 float keyRounding = (whiteOrBlack == 1) ? blackKeyRounding : 0;
 
                 this.rect((x - w / 2), 0, w, h, 0, 0, keyRounding, keyRounding);
             }
         }
+    }
+
+    int[] getKeyColour(int key)
+    {
+        int colour = mKeyboard.isKeyWhite(key) ? 255 : 0;
+
+        int[] output = new int[]{colour, colour, colour};
+
+        // Colour-code recently played keys
+        int keyPosInArray = getReverseKeyPositionInKeysBeingPlayed(key);
+        final int keyDistanceInTime = mKeysBeingPlayed.size() - 1 - keyPosInArray;
+        final int maxDistanceInTime = 8;
+
+        if(keyPosInArray != -1 && mKeysBeingPlayed.size() > 0 && keyDistanceInTime <= maxDistanceInTime)
+        {
+            final float colourInterpolationStrength = 0.4f;
+            final float colourAlpha = colourInterpolationStrength * (1 - (float) keyDistanceInTime / maxDistanceInTime);
+
+            output[0] = (int)(colourAlpha * primaryColourR + (1-colourAlpha) * output[0]);
+            output[1] = (int)(colourAlpha * primaryColourG + (1-colourAlpha) * output[1]);
+            output[2] = (int)(colourAlpha * primaryColourB + (1-colourAlpha) * output[2]);
+        }
+
+        return output;
+    }
+
+    private int getReverseKeyPositionInKeysBeingPlayed(int key)
+    {
+        for(int i = mKeysBeingPlayed.size() - 1; i >= 0; --i)
+        {
+            if(mKeysBeingPlayed.get(i) == key)
+                return i;
+        }
+
+        return -1;
     }
 
     @Override
@@ -103,17 +140,5 @@ public class ProcessingSketch extends PApplet
                 }
             }
         }
-    }
-
-    Chord.KeyNames keyIdToName(int id)
-    {
-        //id is an index of keys from C to ...
-
-        id = id % 12;
-        return new Chord.KeyNames[]{
-                //Niamh input
-            Chord.KeyNames.C, Chord.KeyNames.CS, Chord.KeyNames.D, Chord.KeyNames.DS, Chord.KeyNames.E, Chord.KeyNames.F,
-                Chord.KeyNames.FS, Chord.KeyNames.G, Chord.KeyNames.GS, Chord.KeyNames.A, Chord.KeyNames.AS, Chord.KeyNames.B
-        }[id];
     }
 }
