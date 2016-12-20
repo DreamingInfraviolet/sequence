@@ -13,7 +13,6 @@ import com.audinarium.sequence.sequence.Graphics.StaveSketch;
 import processing.android.PFragment;
 import processing.core.PApplet;
 
-import static com.audinarium.sequence.sequence.R.id.backToKeyboard;
 
 /**
  * Created by Volodymyr on 12/19/2016.
@@ -38,7 +37,7 @@ public class StaveActivity extends AppCompatActivity
 
         boolean playButtonClicked = false;
 
-        ImageButton playButton = (ImageButton)findViewById(R.id.play);
+        final ImageButton playButton = (ImageButton)findViewById(R.id.play);
         ImageButton stopButton = (ImageButton) findViewById(R.id.stop);
 
         playButton.setOnClickListener(new View.OnClickListener()
