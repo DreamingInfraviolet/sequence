@@ -83,7 +83,7 @@ public class StaveSketch extends PApplet
             text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 2);
             text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 6);
         }
-        
+
         text(MusicFont.barlineSingle, xOffset, y);
 
 
@@ -111,7 +111,7 @@ public class StaveSketch extends PApplet
 
         for (int i = 0; i < notes.length; ++i)
         {
-            if(i == notePlayingIndex)
+            if(i == notePlayingIndex && chordToShow == null)
                 fill(notePlayingColour[0], notePlayingColour[1], notePlayingColour[2]);
             else
                 fill(0, 0, 0);
