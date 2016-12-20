@@ -138,7 +138,7 @@ public class StaveSketch extends PApplet
             float x = xOffset + stepX - textWidth(MusicFont.staff5Lines) / 8.0f + i * stepX;
             float y = startY - stepY * (note.index);
 
-            text(MusicFont.quarterNoteUp, x, y);
+            text((note.index >= 6) ? MusicFont.quarterNoteDown : MusicFont.quarterNoteUp, x, y);
 
             if (note.index == 0 || note.index == 12)
                 text(MusicFont.ledgerLine, x, y);
@@ -194,6 +194,10 @@ public class StaveSketch extends PApplet
         }
     }
 
+    void drawChords()
+    {
+
+    }
 
     long timeSinceLastNote()
     {
