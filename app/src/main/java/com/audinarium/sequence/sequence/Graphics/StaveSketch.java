@@ -29,14 +29,28 @@ public class StaveSketch extends PApplet
     StaveState mPreviousState = null;
     Context mContext;
 
+    private static StaveSketch sInstance;
+
     @Override
     public void settings()
     {
         fullScreen();
     }
 
+    public static StaveSketch instance()
+    {
+        return sInstance;
+    }
+
+    public StaveState getState()
+    {
+        return mCurrentState;
+    }
+
     public StaveSketch(int[] keys, Context context)
     {
+        sInstance = this;
+
         mContext = context;
         mCurrentState = new StaveState();
         mCurrentState.notes = Note.fromKeyIds(keys);

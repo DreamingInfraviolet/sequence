@@ -13,12 +13,15 @@ import com.audinarium.sequence.sequence.Graphics.StaveSketch;
 import processing.android.PFragment;
 import processing.core.PApplet;
 
+import static android.R.attr.start;
+
 /**
  * Created by Volodymyr on 12/19/2016.
  */
 
 public class StaveActivity extends AppCompatActivity
 {
+    boolean playButtonClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,8 +37,6 @@ public class StaveActivity extends AppCompatActivity
                 .replace(R.id.stave_layout, fragment)
                 .commit();
 
-        boolean playButtonClicked = false;
-
         final ImageButton playButton = (ImageButton)findViewById(R.id.play);
         ImageButton stopButton = (ImageButton) findViewById(R.id.stop);
 
@@ -44,7 +45,19 @@ public class StaveActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-
+                playButtonClicked = !playButtonClicked;
+                if(playButtonClicked)
+                {
+                    playButtonClicked = true;
+                    StaveSketch.instance().getState().pausePlayback();
+                    playButton.setImageResource(R.drawable.play);
+                }
+                else
+                {
+                    playButtonClicked = false;
+                    StaveSketch.instance().getState().startPlayback();
+                    playButton.setImageResource(R.drawable.pause);
+                }
             }
         });
         stopButton.setOnClickListener(new View.OnClickListener()
