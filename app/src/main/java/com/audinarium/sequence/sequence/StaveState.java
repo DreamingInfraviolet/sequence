@@ -1,14 +1,6 @@
 package com.audinarium.sequence.sequence;
 
-import android.content.Context;
-
-import com.audinarium.sequence.sequence.Graphics.Chord;
-import com.audinarium.sequence.sequence.Graphics.StaveSketch;
-
-import java.util.ArrayList;
-
 import processing.core.PApplet;
-import processing.core.PFont;
 
 /**
  * Created by Volodymyr on 12/21/2016.
@@ -17,7 +9,7 @@ import processing.core.PFont;
 public class StaveState
 {
     /** The state that the stave is currently in. */
-    public enum State {Start, Paused, Playing, End};
+    public enum State {Start, Paused, Playing};
 
     /** Settings defining how to show the stave */
     public StaveSettings settings;
@@ -49,7 +41,7 @@ public class StaveState
     public void startPlayback()
     {
         shouldFollowPlayingIndex = true;
-        if(state == StaveState.State.End)
+        if(notePlayingIndex == notes.length)
             notePlayingIndex = 0;
         state = StaveState.State.Playing;
     }
@@ -60,18 +52,18 @@ public class StaveState
         state = State.Paused;
     }
 
-
     public float getKeyOffset(PApplet papplet, int playIndex)
     {
-        return settings.getXNoteOffset(papplet)
-                - papplet.textWidth(MusicFont.staff5Lines) / 8.0f
-                + playIndex * settings.getXNoteOffset(papplet);
+        return settings.getNoteSpacing(papplet)
+                + (playIndex % 4) * settings.getNoteSpacing(papplet)
+                + (playIndex / 4) * papplet.textWidth(MusicFont.staff5Lines);
     }
-
 
     public float getXOffset(PApplet papplet)
     {
-        float leftPadding = papplet.textWidth(settings.clefSymbol);
+        float leftPadding = papplet.textWidth(settings.clefSymbol)
+                + Math.max(papplet.textWidth(settings.timeSignatureBottom),
+                           papplet.textWidth(settings.timeSignatureTop));
         return papplet.width / 2 - currentLookCentre + leftPadding;
     }
 

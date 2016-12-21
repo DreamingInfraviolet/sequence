@@ -2,8 +2,6 @@ package com.audinarium.sequence.sequence;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.ParallelExecutorCompat;
 import android.support.v4.content.res.ResourcesCompat;
 
 import processing.core.PApplet;
@@ -26,27 +24,23 @@ public class StaveSettings
     public String clefSymbol;
     public int yOffset;
     public int framerate;
-
-    private static int[] getDefaultColour(Context context)
-    {
-        int c = ResourcesCompat.getColor(context.getResources(), R.color.colorPrimary, null); //without theme
-        return new int[] {Color.red(c), Color.green(c), Color.blue(c)};
-    }
+    public float clefYOffset;
 
     public static StaveSettings generateDefaultSettings(Context context, PApplet papplet)
     {
         StaveSettings s = new StaveSettings();
         s.noteColour = new int[]{0, 0, 0};
         s.staveColour = new int[]{60, 60, 60};
-        s.primaryColour = getDefaultColour(context);
+        s.primaryColour = Util.getDefaultColour(context);
         s.musicFont = papplet.createFont("Bravura.otf", 100);
         s.barHeight = papplet.height / 4;
         s.textHeight = papplet.height / 8;
         s.timeSignatureTop = MusicFont.timeSignature4;
         s.timeSignatureBottom = MusicFont.timeSignature4;
-        s.clefSymbol = "";
+        s.clefSymbol = MusicFont.treble;
         s.yOffset = 40;
         s.framerate = 60;
+        s.clefYOffset = 0;
 
         return s;
     }
@@ -55,11 +49,12 @@ public class StaveSettings
     {
         StaveSettings defaultSettings = generateDefaultSettings(context, papplet);
         defaultSettings.clefSymbol = MusicFont.bass;
+        defaultSettings.clefYOffset = defaultSettings.barHeight / 2.0f;
         return defaultSettings;
     }
 
-    public float getXNoteOffset(PApplet papplet)
+    public float getNoteSpacing(PApplet papplet)
     {
-        return papplet.textWidth(MusicFont.staff5Lines) / 4.0f;
+        return papplet.textWidth(MusicFont.staff5Lines) / 5.0f;
     }
 }

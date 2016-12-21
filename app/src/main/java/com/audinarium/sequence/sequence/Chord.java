@@ -1,15 +1,7 @@
-package com.audinarium.sequence.sequence.Graphics;
-
-import com.audinarium.sequence.sequence.Note;
-import com.audinarium.sequence.sequence.NotesPlayed;
+package com.audinarium.sequence.sequence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static android.R.attr.name;
-import static android.R.id.list;
-import static android.os.Build.VERSION_CODES.M;
-import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.C;
 
 /**
  * Created by Niamh on 29/11/2016.

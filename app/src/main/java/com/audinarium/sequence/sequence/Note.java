@@ -1,9 +1,5 @@
 package com.audinarium.sequence.sequence;
 
-import com.audinarium.sequence.sequence.Graphics.Chord;
-
-import java.util.Collection;
-
 /**
  * Created by Volodymyr on 12/20/2016.
  */
@@ -31,11 +27,6 @@ public class Note implements Comparable<Note>
 
     public Note()
     {
-    }
-
-    public Note(int index)
-    {
-        this.index = index;
     }
 
     public Note(int keyId, int index, Offset offset)

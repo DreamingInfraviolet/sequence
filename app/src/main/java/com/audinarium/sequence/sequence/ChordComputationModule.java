@@ -1,20 +1,14 @@
 package com.audinarium.sequence.sequence;
 
-import com.audinarium.sequence.sequence.Graphics.Chord;
-import com.audinarium.sequence.sequence.Graphics.Keyboard;
-
 import java.util.ArrayList;
-
-import static android.os.Build.VERSION_CODES.N;
-import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.C;
-import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.D;
-import static com.audinarium.sequence.sequence.Graphics.Chord.KeyNames.F;
 
 /**
  * Created by Niamh on 01/12/2016.
+ * This module computes the cords for a sequence of notes
  */
 
-public class NotesPlayed {
+public class ChordComputationModule
+{
     static boolean anyAre(Chord.KeyNames a, Chord.KeyNames b, Chord.KeyNames c, Chord.KeyNames d, Chord.KeyNames q)
     {
         return a == q || b == q || c == q || d == q;

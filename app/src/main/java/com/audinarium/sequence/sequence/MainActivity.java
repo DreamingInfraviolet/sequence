@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getFragmentManager();
-        mSketch = new ProcessingSketch();
+        mSketch = new ProcessingSketch(this);
         PFragment fragment = new PFragment();
         fragment.setSketch(mSketch);
         fragmentManager.beginTransaction()

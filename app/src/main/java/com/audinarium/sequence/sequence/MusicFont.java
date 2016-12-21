@@ -6,7 +6,7 @@ package com.audinarium.sequence.sequence;
 
 public class MusicFont
 {
-    public final static String clef = "\uE050";
+    public final static String treble = "\uE050";
     public final static String bass = "\uE062";
     public final static String barlineSingle = "\uE030";
     public final static String barlineFinal = "\uE032";
