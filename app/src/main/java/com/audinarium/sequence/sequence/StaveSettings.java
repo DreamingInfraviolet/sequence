@@ -53,8 +53,8 @@ public class StaveSettings
         return defaultSettings;
     }
 
-    public float getXNoteOffset(PApplet papplet)
+    public float getNoteSpacing(PApplet papplet)
     {
-        return papplet.textWidth(MusicFont.staff5Lines) / 4.0f;
+        return papplet.textWidth(MusicFont.staff5Lines) / 5.0f;
     }
 }

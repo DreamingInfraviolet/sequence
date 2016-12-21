@@ -181,7 +181,7 @@ public class StaveSketch extends PApplet
                 mCurrentState.pausePlayback();
 
             if(mCurrentState.shouldFollowPlayingIndex)
-                mCurrentState.desiredLookCentre = mCurrentState.notePlayingIndex * mCurrentState.settings.getXNoteOffset(this);
+                mCurrentState.desiredLookCentre = mCurrentState.notePlayingIndex * mCurrentState.settings.getNoteSpacing(this);
         }
     }
 
