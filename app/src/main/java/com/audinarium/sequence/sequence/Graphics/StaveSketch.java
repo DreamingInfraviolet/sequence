@@ -185,19 +185,22 @@ public class StaveSketch extends PApplet
             if(mCurrentState.shouldPlayNote())
             {
                 int noteToPlay = mCurrentState.notePlayingIndex++;
-                AudioPlayback.play(mCurrentState.notes[noteToPlay].keyId);
+                if(noteToPlay >= 0 && noteToPlay < mCurrentState.notes.length)
+                {
+                    AudioPlayback.play(mCurrentState.notes[noteToPlay].keyId);
 
-                if(noteToPlay % 4 == 0 && (noteToPlay / 4 < mCurrentState.chords.length))
-                    AudioPlayback.play(mCurrentState.chords[noteToPlay / 4]);
+                    if (noteToPlay % 4 == 0 && (noteToPlay / 4 < mCurrentState.chords.length))
+                        AudioPlayback.play(mCurrentState.chords[noteToPlay / 4]);
+                }
 
                 mCurrentState.timeOfLastNote = System.currentTimeMillis();
             }
 
             // No more notes to play
             if(!(mCurrentState.notePlayingIndex < mCurrentState.notes.length))
-                mCurrentState.pausePlayback();
+                mCurrentState.notePlayingIndex = -4;
 
-            if(mCurrentState.shouldFollowPlayingIndex)
+            if(mCurrentState.shouldFollowPlayingIndex && mCurrentState.notePlayingIndex >= 0)
                 mCurrentState.desiredLookCentre = mCurrentState.getXOffset(this)
                         + mCurrentState.currentLookCentre - width / 2
                         + mCurrentState.getKeyOffset(this, mCurrentState.notePlayingIndex);
