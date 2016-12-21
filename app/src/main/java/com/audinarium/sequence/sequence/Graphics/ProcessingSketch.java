@@ -1,13 +1,12 @@
 package com.audinarium.sequence.sequence.Graphics;
 
-import android.util.Log;
+import android.content.Context;
 
 import com.audinarium.sequence.sequence.AudioPlayback;
-import com.audinarium.sequence.sequence.NotesPlayed;
+import com.audinarium.sequence.sequence.Keyboard;
 import com.audinarium.sequence.sequence.Util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Stack;
 
 import processing.core.PApplet;
@@ -18,12 +17,16 @@ import processing.core.PApplet;
 
 public class ProcessingSketch extends PApplet
 {
-    final int primaryColourR = 0, primaryColourG = 70, primaryColourB  = 140;
     ArrayList<Integer> mKeysBeingPlayed = new ArrayList<>();
     Keyboard mKeyboard = new Keyboard();
-    float mViewOffset = 0.0f;
     float mKeyScaleMultiplier;
     Stack<Integer> mUndoStack = new Stack();
+    Context mContext;
+
+    public ProcessingSketch(Context context)
+    {
+        mContext = context;
+    }
 
     public ArrayList<Integer> getKeysPlayed()
     {
@@ -100,9 +103,10 @@ public class ProcessingSketch extends PApplet
             final float colourInterpolationStrength = 0.4f;
             final float colourAlpha = colourInterpolationStrength * (1 - (float) keyDistanceInTime / maxDistanceInTime);
 
-            output[0] = (int)(colourAlpha * primaryColourR + (1-colourAlpha) * output[0]);
-            output[1] = (int)(colourAlpha * primaryColourG + (1-colourAlpha) * output[1]);
-            output[2] = (int)(colourAlpha * primaryColourB + (1-colourAlpha) * output[2]);
+            int[] defaultColour = Util.getDefaultColour(mContext);
+            output[0] = (int) Util.lerp(output[0], defaultColour[0], colourAlpha);
+            output[1] = (int) Util.lerp(output[1], defaultColour[1], colourAlpha);
+            output[2] = (int) Util.lerp(output[2], defaultColour[2], colourAlpha);
         }
 
         return output;

@@ -1,6 +1,8 @@
 package com.audinarium.sequence.sequence;
 
-import com.audinarium.sequence.sequence.Graphics.Chord;
+import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 
@@ -29,5 +31,11 @@ public class Util
         for (int i=0; i < ret.length; i++)
             ret[i] = list.get(i);
         return ret;
+    }
+
+    public static int[] getDefaultColour(Context context)
+    {
+        int c = ResourcesCompat.getColor(context.getResources(), R.color.colorPrimary, null); //without theme
+        return new int[] {Color.red(c), Color.green(c), Color.blue(c)};
     }
 }

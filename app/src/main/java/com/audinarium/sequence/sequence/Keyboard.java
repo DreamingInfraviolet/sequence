@@ -1,4 +1,4 @@
-package com.audinarium.sequence.sequence.Graphics;
+package com.audinarium.sequence.sequence;
 
 /**
  * Created by Volodymyr on 10/20/2016.
@@ -59,23 +59,6 @@ public class Keyboard
                         sWhiteKeyWidth*6 + sBlackKeyOffset,                      // A#,
                         sWhiteKeyWidth*6 + sWhiteKeyWidth/2,                     // B
             };
-
-    /** Returns the matrix to translate a unit quad to the correct position on the keyboard
-     * @TODO: Fill this in */
-    public float[] getKeyLocalProjectionMatrix(int index)
-    {
-        assert(index < sNKeys);
-        float w = getKeyWidth(index);
-        float h = getKeyHeight(index);
-        float x = getKeyPosition(index);
-        float depth = isKeyWhite(index) ? 0 : 0.1f;
-
-        return new float[] {
-                w, 0, 0, 0,
-                0, h, 0, 0,
-                0, 0, 0, 0,
-                x - w/2, 1-h, depth, 1};
-    }
 
     /** Returns the width of a key in local coordinates */
     public float getKeyWidth(int index)

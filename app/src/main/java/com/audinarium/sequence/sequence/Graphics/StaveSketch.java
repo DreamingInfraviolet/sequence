@@ -1,26 +1,23 @@
 package com.audinarium.sequence.sequence.Graphics;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.audinarium.sequence.sequence.AudioPlayback;
+import com.audinarium.sequence.sequence.Chord;
 import com.audinarium.sequence.sequence.MusicFont;
 import com.audinarium.sequence.sequence.Note;
-import com.audinarium.sequence.sequence.NotesPlayed;
+import com.audinarium.sequence.sequence.ChordComputationModule;
 import com.audinarium.sequence.sequence.StaveSettings;
 import com.audinarium.sequence.sequence.StaveState;
 import com.audinarium.sequence.sequence.Util;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import processing.core.PApplet;
-import processing.core.PFont;
 
 /**
  * Created by Volodymyr on 12/19/2016.
- * I am embarrassed to have written it. BUT IT WORKS.
  */
 
 public class StaveSketch extends PApplet
@@ -43,7 +40,7 @@ public class StaveSketch extends PApplet
 
         Chord.KeyNames[] names = Chord.fromKeyIds(keys);
         ArrayList<Chord.KeyNames> namesList = new ArrayList<>(Arrays.asList(names));
-        mCurrentState.chords = Util.listToArrayChord((new NotesPlayed()).recorded(namesList));
+        mCurrentState.chords = Util.listToArrayChord((new ChordComputationModule()).recorded(namesList));
     }
 
     @Override
@@ -64,8 +61,19 @@ public class StaveSketch extends PApplet
         final float barHeight = mCurrentState.settings.barHeight;
         final float y = mCurrentState.settings.yOffset + barHeight;
 
-        text(mCurrentState.settings.clefSymbol, xOffset - textWidth(mCurrentState.settings.clefSymbol), y - barHeight / 2.0f);
+        text(mCurrentState.settings.clefSymbol,
+                xOffset - textWidth(mCurrentState.settings.clefSymbol)
+                        - Math.max(textWidth(mCurrentState.settings.timeSignatureBottom),
+                                   textWidth(mCurrentState.settings.timeSignatureTop)),
+                y - mCurrentState.settings.clefYOffset);
         text(MusicFont.barlineSingle, xOffset, y);
+
+        text(mCurrentState.settings.timeSignatureBottom,
+                xOffset - textWidth(mCurrentState.settings.timeSignatureBottom),
+                y - barHeight / 8.0f * 2);
+        text(mCurrentState.settings.timeSignatureTop,
+                xOffset - textWidth(mCurrentState.settings.timeSignatureTop),
+                y - barHeight / 8.0f * 6);
 
         for (int i = 0; i < n; ++i)
         {
@@ -115,6 +123,7 @@ public class StaveSketch extends PApplet
             background(255, 255, 255);
             fill(mCurrentState.settings.staveColour);
             drawBars();
+            fill(mCurrentState.settings.noteColour);
             drawNotes();
             drawChords();
         }

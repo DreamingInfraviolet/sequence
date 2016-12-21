@@ -1,14 +1,6 @@
 package com.audinarium.sequence.sequence;
 
-import android.content.Context;
-
-import com.audinarium.sequence.sequence.Graphics.Chord;
-import com.audinarium.sequence.sequence.Graphics.StaveSketch;
-
-import java.util.ArrayList;
-
 import processing.core.PApplet;
-import processing.core.PFont;
 
 /**
  * Created by Volodymyr on 12/21/2016.
@@ -71,7 +63,9 @@ public class StaveState
 
     public float getXOffset(PApplet papplet)
     {
-        float leftPadding = papplet.textWidth(settings.clefSymbol);
+        float leftPadding = papplet.textWidth(settings.clefSymbol)
+                + Math.max(papplet.textWidth(settings.timeSignatureBottom),
+                           papplet.textWidth(settings.timeSignatureTop));
         return papplet.width / 2 - currentLookCentre + leftPadding;
     }
 
