@@ -15,7 +15,7 @@ import processing.core.PApplet;
  * Created by Volodymyr on 11/17/2016.
  */
 
-public class ProcessingSketch extends PApplet
+public class PianoSketch extends PApplet
 {
     ArrayList<Integer> mKeysBeingPlayed = new ArrayList<>();
     Keyboard mKeyboard = new Keyboard();
@@ -23,7 +23,7 @@ public class ProcessingSketch extends PApplet
     Stack<Integer> mUndoStack = new Stack();
     Context mContext;
 
-    public ProcessingSketch(Context context)
+    public PianoSketch(Context context)
     {
         mContext = context;
     }

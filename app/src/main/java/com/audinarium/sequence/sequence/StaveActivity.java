@@ -17,6 +17,7 @@ import static android.R.attr.start;
 
 /**
  * Created by Volodymyr on 12/19/2016.
+ * The main stave activity. This just launches the processing and handles buttons.
  */
 
 public class StaveActivity extends AppCompatActivity

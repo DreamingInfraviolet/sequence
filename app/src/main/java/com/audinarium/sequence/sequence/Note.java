@@ -2,6 +2,7 @@ package com.audinarium.sequence.sequence;
 
 /**
  * Created by Volodymyr on 12/20/2016.
+ * A musical note class representing a note with an index that can also be drawn on a stave.
  */
 
 public class Note implements Comparable<Note>
@@ -72,7 +73,7 @@ public class Note implements Comparable<Note>
         return notes;
     }
 
-    public static Note fromKeyName(Chord.KeyNames name)
+    public static Note fromKeyName(Chord.KeyName name)
     {
         return fromKeyId(name.ordinal());
     }

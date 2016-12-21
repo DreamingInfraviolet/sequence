@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 
 import processing.android.PFragment;
 
-import com.audinarium.sequence.sequence.Graphics.ProcessingSketch;
+import com.audinarium.sequence.sequence.Graphics.PianoSketch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         return sInstance;
     }
 
-    public ProcessingSketch mSketch;
+    public PianoSketch mSketch;
 
     @Override
     protected void onResume()
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getFragmentManager();
-        mSketch = new ProcessingSketch(this);
+        mSketch = new PianoSketch(this);
         PFragment fragment = new PFragment();
         fragment.setSketch(mSketch);
         fragmentManager.beginTransaction()

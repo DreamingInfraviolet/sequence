@@ -5,14 +5,15 @@ import java.util.Arrays;
 
 /**
  * Created by Niamh on 29/11/2016.
+ * Represents a chord, as well as some chord-related methods.
  */
 
 public class Chord{
 
-    public KeyNames doh, mi, soh;
+    public KeyName doh, mi, soh;
     public String name;
 
-    public Chord(KeyNames doh_, KeyNames mi_, KeyNames soh_, String name_)
+    public Chord(KeyName doh_, KeyName mi_, KeyName soh_, String name_)
     {
         doh = doh_;
         mi = mi_;
@@ -26,12 +27,13 @@ public class Chord{
         return name;
     }
 
-    public boolean containsKey(KeyNames key)
+    public boolean containsKey(KeyName key)
     {
         return doh==key || mi==key || soh==key;
     }
 
-    public enum KeyNames {
+    public enum KeyName
+    {
         C, CS, D, DS, E, F, FS, G, GS, A, AS, B
     };
 
@@ -39,7 +41,7 @@ public class Chord{
         ChordC, ChordCS, ChordD, ChordDS, ChordE, ChordF, ChordFS, ChordG, ChordGS, ChordA, ChordAS, ChordB
     };
 
-    public static Chord[] sGetChordsWithKeys(KeyNames[] names, Chord[] chordList)
+    public static Chord[] sGetChordsWithKeys(KeyName[] names, Chord[] chordList)
     {
         return sGetChordsWithKeys(names, chordList, names.length);
     }
@@ -47,7 +49,7 @@ public class Chord{
     /** Returns all chords that contain all of the key names in the chord
      * @param names An array of keys to search for
      * @param numberToSucceed Will return a chord if at least numberToSucceed keys are in it.*/
-    public static Chord[] sGetChordsWithKeys(KeyNames[] names, Chord[] chordList, int numberToSucceed)
+    public static Chord[] sGetChordsWithKeys(KeyName[] names, Chord[] chordList, int numberToSucceed)
     {
         ArrayList<Chord> output = new ArrayList<>();
 
@@ -68,54 +70,54 @@ public class Chord{
 
     public static Chord sMajor[] = new Chord[]
             {
-                    new Chord(KeyNames.C, KeyNames.E, KeyNames.G, "C"),
-                    new Chord(KeyNames.CS, KeyNames.F, KeyNames.GS, "C#/D♭"),
-                    new Chord(KeyNames.D, KeyNames.FS, KeyNames.A, "D"),
-                    new Chord(KeyNames.DS, KeyNames.G, KeyNames.AS, "D#/E♭"),
-                    new Chord(KeyNames.E, KeyNames.GS, KeyNames.B, "E" ),
-                    new Chord(KeyNames.F, KeyNames.A, KeyNames.C, "F"),
-                    new Chord(KeyNames.FS, KeyNames.AS, KeyNames.CS, "F#/G♭"),
-                    new Chord(KeyNames.G, KeyNames.B, KeyNames.D, "G"),
-                    new Chord(KeyNames.GS, KeyNames.C, KeyNames.DS, "G#/A♭"),
-                    new Chord(KeyNames.A, KeyNames.CS, KeyNames.E, "A"),
-                    new Chord(KeyNames.AS, KeyNames.D, KeyNames.F, "A#/B♭"),
-                    new Chord(KeyNames.B, KeyNames.DS, KeyNames.FS, "B")
+                    new Chord(KeyName.C, KeyName.E, KeyName.G, "C"),
+                    new Chord(KeyName.CS, KeyName.F, KeyName.GS, "C#/D♭"),
+                    new Chord(KeyName.D, KeyName.FS, KeyName.A, "D"),
+                    new Chord(KeyName.DS, KeyName.G, KeyName.AS, "D#/E♭"),
+                    new Chord(KeyName.E, KeyName.GS, KeyName.B, "E" ),
+                    new Chord(KeyName.F, KeyName.A, KeyName.C, "F"),
+                    new Chord(KeyName.FS, KeyName.AS, KeyName.CS, "F#/G♭"),
+                    new Chord(KeyName.G, KeyName.B, KeyName.D, "G"),
+                    new Chord(KeyName.GS, KeyName.C, KeyName.DS, "G#/A♭"),
+                    new Chord(KeyName.A, KeyName.CS, KeyName.E, "A"),
+                    new Chord(KeyName.AS, KeyName.D, KeyName.F, "A#/B♭"),
+                    new Chord(KeyName.B, KeyName.DS, KeyName.FS, "B")
 
             };
     public static Chord sMinor[] = new Chord[]
             {
-                    new Chord(KeyNames.C, KeyNames.DS, KeyNames.G, "Cm"),
-                    new Chord(KeyNames.CS, KeyNames.E, KeyNames.GS, "C#/D♭m"),
-                    new Chord(KeyNames.D, KeyNames.F, KeyNames.A, "Dm"),
-                    new Chord(KeyNames.DS, KeyNames.FS, KeyNames.AS, "D#/E♭m"),
-                    new Chord(KeyNames.E, KeyNames.G, KeyNames.B, "Em"),
-                    new Chord(KeyNames.F, KeyNames.GS, KeyNames.C, "Fm"),
-                    new Chord(KeyNames.FS, KeyNames.A, KeyNames.CS, "F#/G♭m"),
-                    new Chord(KeyNames.G, KeyNames.AS, KeyNames.D, "Gm"),
-                    new Chord(KeyNames.GS, KeyNames.B, KeyNames.DS, "G#/A♭m"),
-                    new Chord(KeyNames.A, KeyNames.C, KeyNames.E, "Am"),
-                    new Chord(KeyNames.AS, KeyNames.CS, KeyNames.F, "A#/B♭m"),
-                    new Chord(KeyNames.B, KeyNames.D, KeyNames.FS, "Bm")
+                    new Chord(KeyName.C, KeyName.DS, KeyName.G, "Cm"),
+                    new Chord(KeyName.CS, KeyName.E, KeyName.GS, "C#/D♭m"),
+                    new Chord(KeyName.D, KeyName.F, KeyName.A, "Dm"),
+                    new Chord(KeyName.DS, KeyName.FS, KeyName.AS, "D#/E♭m"),
+                    new Chord(KeyName.E, KeyName.G, KeyName.B, "Em"),
+                    new Chord(KeyName.F, KeyName.GS, KeyName.C, "Fm"),
+                    new Chord(KeyName.FS, KeyName.A, KeyName.CS, "F#/G♭m"),
+                    new Chord(KeyName.G, KeyName.AS, KeyName.D, "Gm"),
+                    new Chord(KeyName.GS, KeyName.B, KeyName.DS, "G#/A♭m"),
+                    new Chord(KeyName.A, KeyName.C, KeyName.E, "Am"),
+                    new Chord(KeyName.AS, KeyName.CS, KeyName.F, "A#/B♭m"),
+                    new Chord(KeyName.B, KeyName.D, KeyName.FS, "Bm")
             };
 
 
 
 
-    public static Chord.KeyNames keyIdToName(int id)
+    public static KeyName keyIdToName(int id)
     {
         //id is an index of keys from C to ...
 
         id = id % 12;
-        return new Chord.KeyNames[]{
+        return new KeyName[]{
                 //Niamh input
-                Chord.KeyNames.C, Chord.KeyNames.CS, Chord.KeyNames.D, Chord.KeyNames.DS, Chord.KeyNames.E, Chord.KeyNames.F,
-                Chord.KeyNames.FS, Chord.KeyNames.G, Chord.KeyNames.GS, Chord.KeyNames.A, Chord.KeyNames.AS, Chord.KeyNames.B
+                KeyName.C, KeyName.CS, KeyName.D, KeyName.DS, KeyName.E, KeyName.F,
+                KeyName.FS, KeyName.G, KeyName.GS, KeyName.A, KeyName.AS, KeyName.B
         }[id];
     }
 
-    public static KeyNames[] fromKeyIds(int[] ids)
+    public static KeyName[] fromKeyIds(int[] ids)
     {
-        KeyNames[] array = new KeyNames[ids.length];
+        KeyName[] array = new KeyName[ids.length];
         for(int i = 0; i < ids.length; ++i)
             array[i] = keyIdToName(ids[i]);
         return array;

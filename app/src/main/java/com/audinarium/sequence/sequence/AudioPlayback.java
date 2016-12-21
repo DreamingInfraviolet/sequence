@@ -6,6 +6,7 @@ import android.util.Log;
 
 /**
  * Created by Volodymyr on 11/24/2016.
+ * Helps with playing music notes.
  */
 
 public class AudioPlayback

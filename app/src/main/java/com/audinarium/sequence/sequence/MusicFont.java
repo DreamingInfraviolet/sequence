@@ -2,6 +2,7 @@ package com.audinarium.sequence.sequence;
 
 /**
  * Created by Volodymyr on 12/20/2016.
+ * Stores useful font entries for drawing musical notation.
  */
 
 public class MusicFont

@@ -9,6 +9,7 @@ import processing.core.PFont;
 
 /**
  * Created by Volodymyr on 12/21/2016.
+ * Represents stave settings. This can be reused for multiple staves.
  */
 
 public class StaveSettings

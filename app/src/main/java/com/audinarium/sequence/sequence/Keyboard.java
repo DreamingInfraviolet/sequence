@@ -11,12 +11,12 @@ package com.audinarium.sequence.sequence;
 /**
  * Inputs to Niamh's thingy:
  * * Major/Minor
- * * KeyNames array
+ * * KeyName array
  * Outputs:
  * * Chord array
  *
  * Chord:
- * * KeyNames a, b, c;
+ * * KeyName a, b, c;
  */
 
 public class Keyboard

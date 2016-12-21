@@ -4,6 +4,7 @@ import processing.core.PApplet;
 
 /**
  * Created by Volodymyr on 12/21/2016.
+ * Represents the stave state. This is unique for each stave.
  */
 
 public class StaveState

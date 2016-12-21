@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Volodymyr on 12/21/2016.
+ * A general helper class.
  */
 
 public class Util

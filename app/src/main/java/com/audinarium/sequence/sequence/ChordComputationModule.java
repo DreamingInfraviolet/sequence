@@ -4,32 +4,32 @@ import java.util.ArrayList;
 
 /**
  * Created by Niamh on 01/12/2016.
- * This module computes the cords for a sequence of notes
+ * This module computes the chords for a sequence of notes
  */
 
 public class ChordComputationModule
 {
-    static boolean anyAre(Chord.KeyNames a, Chord.KeyNames b, Chord.KeyNames c, Chord.KeyNames d, Chord.KeyNames q)
+    static boolean anyAre(Chord.KeyName a, Chord.KeyName b, Chord.KeyName c, Chord.KeyName d, Chord.KeyName q)
     {
         return a == q || b == q || c == q || d == q;
     }
 
-    static boolean anyAre(Chord.KeyNames a, Chord.KeyNames b, Chord.KeyNames c, Chord.KeyNames q)
+    static boolean anyAre(Chord.KeyName a, Chord.KeyName b, Chord.KeyName c, Chord.KeyName q)
     {
         return a == q || b == q || c == q;
     }
 
-    static boolean anyAre(Chord.KeyNames a, Chord.KeyNames b, Chord.KeyNames q)
+    static boolean anyAre(Chord.KeyName a, Chord.KeyName b, Chord.KeyName q)
     {
         return a == q || b == q;
     }
 
-    static boolean anyAre(Chord.KeyNames a, Chord.KeyNames q)
+    static boolean anyAre(Chord.KeyName a, Chord.KeyName q)
     {
         return a == q;
     }
 
-    public ArrayList<Chord> recorded(ArrayList<Chord.KeyNames> notesPlayed)
+    public ArrayList<Chord> recorded(ArrayList<Chord.KeyName> notesPlayed)
     {
         ArrayList<Chord> chordOutput = new ArrayList<Chord>();
 
@@ -39,21 +39,21 @@ public class ChordComputationModule
 
             if (nToProcess == 2)
             {
-                Chord.KeyNames keyA = notesPlayed.get(i);
-                Chord.KeyNames keyB = notesPlayed.get(i+1);
+                Chord.KeyName keyA = notesPlayed.get(i);
+                Chord.KeyName keyB = notesPlayed.get(i+1);
 
-                boolean c = anyAre(keyA, keyB, Chord.KeyNames.C);
-                boolean cs = anyAre(keyA, keyB, Chord.KeyNames.CS);
-                boolean d = anyAre(keyA, keyB, Chord.KeyNames.D);
-                boolean ds = anyAre(keyA, keyB, Chord.KeyNames.DS);
-                boolean e = anyAre(keyA, keyB, Chord.KeyNames.E);
-                boolean f = anyAre(keyA, keyB, Chord.KeyNames.F);
-                boolean fs = anyAre(keyA, keyB, Chord.KeyNames.FS);
-                boolean g = anyAre(keyA, keyB, Chord.KeyNames.G);
-                boolean gs = anyAre(keyA, keyB, Chord.KeyNames.GS);
-                boolean a = anyAre(keyA, keyB, Chord.KeyNames.A);
-                boolean as = anyAre(keyA, keyB, Chord.KeyNames.AS);
-                boolean b = anyAre(keyA, keyB, Chord.KeyNames.B);
+                boolean c = anyAre(keyA, keyB, Chord.KeyName.C);
+                boolean cs = anyAre(keyA, keyB, Chord.KeyName.CS);
+                boolean d = anyAre(keyA, keyB, Chord.KeyName.D);
+                boolean ds = anyAre(keyA, keyB, Chord.KeyName.DS);
+                boolean e = anyAre(keyA, keyB, Chord.KeyName.E);
+                boolean f = anyAre(keyA, keyB, Chord.KeyName.F);
+                boolean fs = anyAre(keyA, keyB, Chord.KeyName.FS);
+                boolean g = anyAre(keyA, keyB, Chord.KeyName.G);
+                boolean gs = anyAre(keyA, keyB, Chord.KeyName.GS);
+                boolean a = anyAre(keyA, keyB, Chord.KeyName.A);
+                boolean as = anyAre(keyA, keyB, Chord.KeyName.AS);
+                boolean b = anyAre(keyA, keyB, Chord.KeyName.B);
 
                 if(c && e || c && g)
                 {
@@ -204,20 +204,20 @@ public class ChordComputationModule
             }
             else if (nToProcess == 1)
             {
-                Chord.KeyNames keyA = notesPlayed.get(i);
+                Chord.KeyName keyA = notesPlayed.get(i);
 
-                boolean c = anyAre(keyA, Chord.KeyNames.C);
-                boolean cs = anyAre(keyA, Chord.KeyNames.CS);
-                boolean d = anyAre(keyA, Chord.KeyNames.D);
-                boolean ds = anyAre(keyA, Chord.KeyNames.DS);
-                boolean e = anyAre(keyA, Chord.KeyNames.E);
-                boolean f = anyAre(keyA, Chord.KeyNames.F);
-                boolean fs = anyAre(keyA, Chord.KeyNames.FS);
-                boolean g = anyAre(keyA, Chord.KeyNames.G);
-                boolean gs = anyAre(keyA, Chord.KeyNames.GS);
-                boolean a = anyAre(keyA, Chord.KeyNames.A);
-                boolean as = anyAre(keyA, Chord.KeyNames.AS);
-                boolean b = anyAre(keyA, Chord.KeyNames.B);
+                boolean c = anyAre(keyA, Chord.KeyName.C);
+                boolean cs = anyAre(keyA, Chord.KeyName.CS);
+                boolean d = anyAre(keyA, Chord.KeyName.D);
+                boolean ds = anyAre(keyA, Chord.KeyName.DS);
+                boolean e = anyAre(keyA, Chord.KeyName.E);
+                boolean f = anyAre(keyA, Chord.KeyName.F);
+                boolean fs = anyAre(keyA, Chord.KeyName.FS);
+                boolean g = anyAre(keyA, Chord.KeyName.G);
+                boolean gs = anyAre(keyA, Chord.KeyName.GS);
+                boolean a = anyAre(keyA, Chord.KeyName.A);
+                boolean as = anyAre(keyA, Chord.KeyName.AS);
+                boolean b = anyAre(keyA, Chord.KeyName.B);
 
                 if(c)
                 {
@@ -272,7 +272,7 @@ public class ChordComputationModule
             {
                 boolean c = false, cs = false, d = false, ds = false, e = false, f = false, fs = false,
                         g = false, gs = false, a = false, as = false, b = false;
-                Chord.KeyNames keyA, keyB, keyC, keyD;
+                Chord.KeyName keyA, keyB, keyC, keyD;
 
                 keyA = notesPlayed.get(i);
                 keyB = notesPlayed.get(i+1);
@@ -280,35 +280,35 @@ public class ChordComputationModule
 
                 if(nToProcess == 3)
                 {
-                    c = anyAre(keyA, keyB, keyC, Chord.KeyNames.C);
-                    cs = anyAre(keyA, keyB, keyC, Chord.KeyNames.CS);
-                    d = anyAre(keyA, keyB, keyC, Chord.KeyNames.D);
-                    ds = anyAre(keyA, keyB, keyC, Chord.KeyNames.DS);
-                    e = anyAre(keyA, keyB, keyC, Chord.KeyNames.E);
-                    f = anyAre(keyA, keyB, keyC, Chord.KeyNames.F);
-                    fs = anyAre(keyA, keyB, keyC, Chord.KeyNames.FS);
-                    g = anyAre(keyA, keyB, keyC, Chord.KeyNames.G);
-                    gs = anyAre(keyA, keyB, keyC, Chord.KeyNames.GS);
-                    a = anyAre(keyA, keyB, keyC, Chord.KeyNames.A);
-                    as = anyAre(keyA, keyB, keyC, Chord.KeyNames.AS);
-                    b = anyAre(keyA, keyB, keyC, Chord.KeyNames.B);
+                    c = anyAre(keyA, keyB, keyC, Chord.KeyName.C);
+                    cs = anyAre(keyA, keyB, keyC, Chord.KeyName.CS);
+                    d = anyAre(keyA, keyB, keyC, Chord.KeyName.D);
+                    ds = anyAre(keyA, keyB, keyC, Chord.KeyName.DS);
+                    e = anyAre(keyA, keyB, keyC, Chord.KeyName.E);
+                    f = anyAre(keyA, keyB, keyC, Chord.KeyName.F);
+                    fs = anyAre(keyA, keyB, keyC, Chord.KeyName.FS);
+                    g = anyAre(keyA, keyB, keyC, Chord.KeyName.G);
+                    gs = anyAre(keyA, keyB, keyC, Chord.KeyName.GS);
+                    a = anyAre(keyA, keyB, keyC, Chord.KeyName.A);
+                    as = anyAre(keyA, keyB, keyC, Chord.KeyName.AS);
+                    b = anyAre(keyA, keyB, keyC, Chord.KeyName.B);
                 }
                 else if(nToProcess >= 4)
                 {
                     keyD = notesPlayed.get(i+3);
 
-                    c = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.C);
-                    cs = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.CS);
-                    d = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.D);
-                    ds = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.DS);
-                    e = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.E);
-                    f = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.F);
-                    fs = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.FS);
-                    g = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.G);
-                    gs = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.GS);
-                    a = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.A);
-                    as = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.AS);
-                    b = anyAre(keyA, keyB, keyC, keyD, Chord.KeyNames.B);
+                    c = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.C);
+                    cs = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.CS);
+                    d = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.D);
+                    ds = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.DS);
+                    e = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.E);
+                    f = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.F);
+                    fs = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.FS);
+                    g = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.G);
+                    gs = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.GS);
+                    a = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.A);
+                    as = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.AS);
+                    b = anyAre(keyA, keyB, keyC, keyD, Chord.KeyName.B);
                 }
                 else
                 {

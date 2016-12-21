@@ -53,8 +53,8 @@ public class StaveSketch extends PApplet
         mCurrentState = new StaveState();
         mCurrentState.notes = Note.fromKeyIds(keys);
 
-        Chord.KeyNames[] names = Chord.fromKeyIds(keys);
-        ArrayList<Chord.KeyNames> namesList = new ArrayList<>(Arrays.asList(names));
+        Chord.KeyName[] names = Chord.fromKeyIds(keys);
+        ArrayList<Chord.KeyName> namesList = new ArrayList<>(Arrays.asList(names));
         mCurrentState.chords = Util.listToArrayChord((new ChordComputationModule()).recorded(namesList));
     }
 
