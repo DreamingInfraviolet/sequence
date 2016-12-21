@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.audinarium.sequence.sequence.AudioPlayback;
 import com.audinarium.sequence.sequence.NotesPlayed;
+import com.audinarium.sequence.sequence.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +28,11 @@ public class ProcessingSketch extends PApplet
     public ArrayList<Integer> getKeysPlayed()
     {
         return mKeysBeingPlayed;
+    }
+
+    public int[] getKeysPlayedAsArray()
+    {
+        return Util.listToArrayInt(mKeysBeingPlayed);
     }
 
     public Stack<Integer> getUndoStack()

@@ -1,14 +1,19 @@
 package com.audinarium.sequence.sequence.Graphics;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.audinarium.sequence.sequence.AudioPlayback;
 import com.audinarium.sequence.sequence.MusicFont;
 import com.audinarium.sequence.sequence.Note;
 import com.audinarium.sequence.sequence.NotesPlayed;
+import com.audinarium.sequence.sequence.StaveSettings;
+import com.audinarium.sequence.sequence.StaveState;
+import com.audinarium.sequence.sequence.Util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -20,72 +25,47 @@ import processing.core.PFont;
 
 public class StaveSketch extends PApplet
 {
-    PFont musicFont;
-    int barHeight;
-    int scroll = 0;
-    int notePlayingIndex = -1;
-    float currentLookCentre = notePlayingIndex;
-    float desiredLookCentre = notePlayingIndex;
-    long timeOfLastNote = -1;
-    Note[] mNotes = null;
-    float stepX;
-    int[] notePlayingColour = new int[] {0, 100, 150};
-    ArrayList<Chord> mChords;
-    float textHeight;
-    int yOffset = 40;
+    StaveState mCurrentState;
+    StaveState mPreviousState = null;
+    Context mContext;
 
-    boolean shouldFollowPlayingIndex = false;
-    Chord chordToShow = null;
-
-    enum State {Start, Paused, Playing, End};
-
-    State state = State.Start;
-
-    void startPlayback()
+    @Override
+    public void settings()
     {
-        shouldFollowPlayingIndex = true;
-        if(state == State.End)
-            notePlayingIndex = -1;
-        state = State.Playing;
+        fullScreen();
     }
 
-    void pausePlayback()
+    public StaveSketch(int[] keys, Context context)
     {
-        shouldFollowPlayingIndex = false;
-        state = State.Paused;
+        mContext = context;
+        mCurrentState = new StaveState();
+        mCurrentState.notes = Note.fromKeyIds(keys);
+
+        Chord.KeyNames[] names = Chord.fromKeyIds(keys);
+        ArrayList<Chord.KeyNames> namesList = new ArrayList<>(Arrays.asList(names));
+        mCurrentState.chords = Util.listToArrayChord((new NotesPlayed()).recorded(namesList));
     }
 
-    public StaveSketch(ArrayList<Integer> keys)
+    @Override
+    public void setup()
     {
-        mNotes = new Note[keys.size()];
+        mCurrentState.settings = StaveSettings.generateDefaultSettings(mContext, this);
 
-        for(int i = 0; i < mNotes.length; ++i)
-        {
-            mNotes[i] = Note.fromKeyId(keys.get(i));
-        }
-
-        NotesPlayed np = new NotesPlayed();
-        ArrayList<Chord.KeyNames> npIn = new ArrayList<>();
-        for(int k : keys)
-            npIn.add(Chord.keyIdToName(k));
-        mChords = np.recorded(npIn);
+        textFont(mCurrentState.settings.musicFont);
+        textSize(mCurrentState.settings.barHeight);
+        frameRate(mCurrentState.settings.framerate);
     }
 
-    void drawBars(int n, float xOffset, float yOffset)
+    void drawBars()
     {
-        float step = textWidth(MusicFont.staff5Lines);
-        float y = yOffset + barHeight;
+        final int n = mCurrentState.countBarsNeeded();
+        final float xOffset = mCurrentState.getXOffset(this);
+        final float step = textWidth(MusicFont.staff5Lines);
+        final float barHeight = mCurrentState.settings.barHeight;
+        final float y = mCurrentState.settings.yOffset + barHeight;
 
-        if(chordToShow != null)
-            text(MusicFont.bass, xOffset - textWidth(MusicFont.bass), y - barHeight / 2.0f);
-        else
-        {
-            text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 2);
-            text(MusicFont.timeSignature4, xOffset - textWidth(MusicFont.timeSignature4), y - barHeight / 8.0f * 6);
-        }
-
+        text(mCurrentState.settings.clefSymbol, xOffset - textWidth(mCurrentState.settings.clefSymbol), y - barHeight / 2.0f);
         text(MusicFont.barlineSingle, xOffset, y);
-
 
         for (int i = 0; i < n; ++i)
         {
@@ -97,28 +77,19 @@ public class StaveSketch extends PApplet
         }
     }
 
-    float getKeyOffset(int playIndex)
+    void drawNotes()
     {
-        return stepX - textWidth(MusicFont.staff5Lines) / 8.0f + playIndex * stepX;
-    }
+        float stepY = mCurrentState.settings.barHeight / 8.0f;
+        float startY = mCurrentState.settings.yOffset + mCurrentState.settings.barHeight + stepY * 2;
 
-    /**
-     * @param notes An array of note indices. Index 0 is middle C, index 1 is C#, etc. */
-    void drawNotes(Note[] notes, float xOffset, float yOffset)
-    {
-        float stepY = barHeight / 8.0f;
-        float startY = yOffset + barHeight + stepY * 2;
-
-        for (int i = 0; i < notes.length; ++i)
+        for (int i = 0; i < mCurrentState.notes.length; ++i)
         {
-            if(i == notePlayingIndex && chordToShow == null)
-                fill(notePlayingColour[0], notePlayingColour[1], notePlayingColour[2]);
-            else
-                fill(0, 0, 0);
+            if(i == mCurrentState.notePlayingIndex)
+                fill(mCurrentState.settings.primaryColour);
 
-            Note note = notes[i];
+            Note note = mCurrentState.notes[i];
 
-            float x = xOffset + getKeyOffset(i);
+            float x = mCurrentState.getXOffset(this) + mCurrentState.getKeyOffset(this, i);
             float y = startY - stepY * (note.index);
 
             text((note.index >= 6) ? MusicFont.quarterNoteDown : MusicFont.quarterNoteUp, x, y);
@@ -133,96 +104,26 @@ public class StaveSketch extends PApplet
         }
     }
 
-    @Override
-    public void settings()
+    private void fill(int[] colour)
     {
-        fullScreen();
-    }
-
-    @Override
-    public void setup()
-    {
-        barHeight = height / 4;
-        textHeight = barHeight / 2;
-        musicFont = createFont("Bravura.otf", barHeight);
-        textFont(musicFont);
-        textSize(barHeight);
-        stepX = textWidth(MusicFont.staff5Lines) / 4.0f;
-        frameRate(60);
-    }
-
-    float getXOffset()
-    {
-        if(chordToShow != null)
-            return textWidth(MusicFont.bass) + textWidth(MusicFont.bass) / 10;
-
-        float barPos = currentLookCentre;
-        float xOffset = width / 2 - barPos;
-        return xOffset;
+        fill(colour[0], colour[1], colour[2]);
     }
 
     void drawStave()
     {
-
         {
             background(255, 255, 255);
-            fill(60, 60, 60);
-
-            int xOffset = (int)getXOffset();
-            int nBars;
-            Note[] notes;
-
-            if(chordToShow == null)
-            {
-                nBars = chordToShow == null ? (mNotes.length / 4 + (mNotes.length % 4 == 0 ? 0 : 1)) : 1;
-                notes = mNotes;
-            }
-            else
-            {
-                nBars = 1;
-                notes = new Note[]{Note.fromKeyName(chordToShow.doh), Note.fromKeyName(chordToShow.mi), Note.fromKeyName(chordToShow.soh)};
-            }
-
-            drawBars(nBars, xOffset, yOffset);
-            drawNotes(notes, xOffset, yOffset);
-
-            if(chordToShow == null)
-                drawChords(xOffset, yOffset, barHeight);
+            fill(mCurrentState.settings.staveColour);
+            drawBars();
+            drawNotes();
+            drawChords();
         }
     }
 
-    void getChordCentre(float[] output, int chordIndex, float rectH, float xOffset)
+
+    void drawChords()
     {
-        float xPosition = xOffset + chordIndex * textWidth(MusicFont.staff5Lines) + textWidth(MusicFont.staff5Lines) / 2.0f;
-        float yPosition = yOffset + barHeight + barHeight / 2 + rectH;
-        output[0] = xPosition;
-        output[1] = yPosition;
-    }
-
-    float[][] getChordCentres(float xOffset)
-    {
-        float[][] output = new float[mChords.size()][4];
-
-        float rectW = textWidth(MusicFont.staff5Lines) * 0.9f;
-        float rectH = textHeight * 1.4f;
-
-        for(int i = 0; i < mChords.size(); ++i)
-        {
-            float[] centre = new float[2];
-            getChordCentre(centre, i, rectH, xOffset);
-
-            output[i][0] = centre[0];
-            output[i][1] = centre[1];
-            output[i][2] = rectW;
-            output[i][3] = rectH;
-        }
-
-        return output;
-    }
-
-    void drawChords(float xOffset, float yOffset, float barHeight)
-    {
-        float[][] chordCentres = getChordCentres(xOffset);
+        float[][] chordCentres = mCurrentState.getChordCentres(this);
 
         for(int i = 0; i < chordCentres.length; ++i)
         {
@@ -231,65 +132,47 @@ public class StaveSketch extends PApplet
             float w = chordCentres[i][2];
             float h = chordCentres[i][3];
 
-            fill(0, 100, 200);
+            fill(mCurrentState.settings.primaryColour);
             rect(x - w / 2, y  - h / 2, w, h);
             fill(0, 0, 0);
-            textSize(textHeight);
-            text(mChords.get(i).toString(), x - textWidth(mChords.get(i).toString()) / 2, y + textHeight / 2);
-            textSize(barHeight);
+            textSize(mCurrentState.settings.textHeight);
+            text(mCurrentState.chords[i].toString(), x - textWidth(mCurrentState.chords[i].toString()) / 2, y
+                    + mCurrentState.settings.textHeight / 2);
+            textSize(mCurrentState.settings.barHeight);
         }
-    }
-
-    long timeSinceLastNote()
-    {
-        return System.currentTimeMillis() - timeOfLastNote;
-    }
-
-
-    boolean shouldPlayNote()
-    {
-        // If notes remain, state is playing, and last played 1/4th of a second ago
-        return notePlayingIndex + 1 < mNotes.length
-                && state == State.Playing
-                && timeSinceLastNote() >= 250;
     }
 
     @Override
     public void draw()
     {
-        if(chordToShow == null)
-        {
-            if (state == State.Start)
-                startPlayback();
+        if (mCurrentState.state == StaveState.State.Start)
+            mCurrentState.startPlayback();
 
-            // Move towards target position
-            float lerpAlpha = 0.8f;
-            currentLookCentre = (lerpAlpha) * desiredLookCentre + (1 - lerpAlpha) * currentLookCentre;
-
-            scroll = (scroll + 10) % 1000;
-        }
+        // Move towards target position
+        mCurrentState.currentLookCentre =
+                Util.lerp(mCurrentState.currentLookCentre,mCurrentState.desiredLookCentre, 0.8f);
 
         drawStave();
 
-        if(chordToShow == null && state == State.Playing)
+        if(mCurrentState.state == StaveState.State.Playing)
         {
-            if(shouldPlayNote())
+            if(mCurrentState.shouldPlayNote())
             {
-                int noteToPlay = ++notePlayingIndex;
-                AudioPlayback.play(mNotes[noteToPlay].keyId);
+                int noteToPlay = mCurrentState.notePlayingIndex++;
+                AudioPlayback.play(mCurrentState.notes[noteToPlay].keyId);
 
-                if(noteToPlay % 4 == 0)
-                    AudioPlayback.play(mChords.get(noteToPlay / 4));
+                if(noteToPlay % 4 == 0 && (noteToPlay / 4 < mCurrentState.chords.length))
+                    AudioPlayback.play(mCurrentState.chords[noteToPlay / 4]);
 
-                timeOfLastNote = System.currentTimeMillis();
+                mCurrentState.timeOfLastNote = System.currentTimeMillis();
             }
 
             // No more notes to play
-            if(!(notePlayingIndex + 1 < mNotes.length))
-                pausePlayback();
+            if(!(mCurrentState.notePlayingIndex < mCurrentState.notes.length))
+                mCurrentState.pausePlayback();
 
-            if(shouldFollowPlayingIndex)
-                desiredLookCentre = notePlayingIndex * stepX;
+            if(mCurrentState.shouldFollowPlayingIndex)
+                mCurrentState.desiredLookCentre = mCurrentState.notePlayingIndex * mCurrentState.settings.getXNoteOffset(this);
         }
     }
 
@@ -297,11 +180,14 @@ public class StaveSketch extends PApplet
     public void mousePressed()
     {
         // If user tapped while chord was showing, close it
-        if(chordToShow != null)
-            chordToShow = null;
+        if(mPreviousState != null)
+        {
+            mCurrentState = mPreviousState;
+            mPreviousState = null;
+        }
         else
         {
-            float[][] chordCentres = getChordCentres(getXOffset());
+            float[][] chordCentres = mCurrentState.getChordCentres(this);
 
             for (int i = 0; i < chordCentres.length; ++i)
             {
@@ -313,17 +199,27 @@ public class StaveSketch extends PApplet
                 if (mouseX > (x - w / 2) && mouseX < (x + w / 2)
                         && mouseY > (y - h / 2) && mouseY < (y + h / 2))
                 {
-                    chordToShow = mChords.get(i);
+                    transitionToChordState(mCurrentState.chords[i]);
                     break;
                 }
             }
         }
     }
 
+    private void transitionToChordState(Chord chord)
+    {
+        mPreviousState = mCurrentState;
+        mCurrentState = new StaveState();
+        mCurrentState.settings = StaveSettings.generateChordDisplaySettings(mContext, this);
+        mCurrentState.notes = new Note[]{Note.fromKeyName(chord.doh),
+                                         Note.fromKeyName(chord.mi),
+                                         Note.fromKeyName(chord.soh)};
+    }
+
     @Override
     public void mouseDragged()
     {
-        shouldFollowPlayingIndex = false;
-        desiredLookCentre -= mouseX - pmouseX;
+        mCurrentState.shouldFollowPlayingIndex = false;
+        mCurrentState.desiredLookCentre -= mouseX - pmouseX;
     }
 }

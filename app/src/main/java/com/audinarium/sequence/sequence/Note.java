@@ -47,6 +47,16 @@ public class Note
         return new Note(id, noteIndex, offset);
     }
 
+    public static Note[] fromKeyIds(int[] ids)
+    {
+        Note[] notes = new Note[ids.length];
+
+        for(int i = 0; i < ids.length; ++i)
+            notes[i] = Note.fromKeyId(ids[i]);
+
+        return notes;
+    }
+
     public static Note fromKeyName(Chord.KeyNames name)
     {
         return fromKeyId(name.ordinal());

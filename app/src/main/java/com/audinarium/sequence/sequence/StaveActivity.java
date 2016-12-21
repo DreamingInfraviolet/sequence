@@ -27,7 +27,7 @@ public class StaveActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_stave);
         FragmentManager fragmentManager = getFragmentManager();
-        PApplet sketch = new StaveSketch(MainActivity.instance().mSketch.getKeysPlayed());
+        PApplet sketch = new StaveSketch(MainActivity.instance().mSketch.getKeysPlayedAsArray(), this);
         PFragment fragment = new PFragment();
         fragment.setSketch(sketch);
         fragmentManager.beginTransaction()

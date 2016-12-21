@@ -1,5 +1,7 @@
 package com.audinarium.sequence.sequence.Graphics;
 
+import com.audinarium.sequence.sequence.NotesPlayed;
+
 import java.util.ArrayList;
 
 import static android.R.attr.name;
@@ -115,5 +117,13 @@ public class Chord{
                 Chord.KeyNames.C, Chord.KeyNames.CS, Chord.KeyNames.D, Chord.KeyNames.DS, Chord.KeyNames.E, Chord.KeyNames.F,
                 Chord.KeyNames.FS, Chord.KeyNames.G, Chord.KeyNames.GS, Chord.KeyNames.A, Chord.KeyNames.AS, Chord.KeyNames.B
         }[id];
+    }
+
+    public static KeyNames[] fromKeyIds(int[] ids)
+    {
+        KeyNames[] array = new KeyNames[ids.length];
+        for(int i = 0; i < ids.length; ++i)
+            array[i] = keyIdToName(ids[i]);
+        return array;
     }
 }
