@@ -94,6 +94,8 @@ public class StaveSketch extends PApplet
         {
             if(i == mCurrentState.notePlayingIndex)
                 fill(mCurrentState.settings.primaryColour);
+            else
+                fill(mCurrentState.settings.noteColour);
 
             Note note = mCurrentState.notes[i];
 

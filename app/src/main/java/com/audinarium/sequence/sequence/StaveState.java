@@ -51,7 +51,7 @@ public class StaveState
         shouldFollowPlayingIndex = false;
         state = State.Paused;
     }
-    
+
     public float getKeyOffset(PApplet papplet, int playIndex)
     {
         return settings.getNoteSpacing(papplet)
