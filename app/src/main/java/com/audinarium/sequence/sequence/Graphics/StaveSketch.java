@@ -18,6 +18,7 @@ import processing.core.PApplet;
 
 /**
  * Created by Volodymyr on 12/19/2016.
+ * Still ashamed of this :/
  */
 
 public class StaveSketch extends PApplet
@@ -183,7 +184,9 @@ public class StaveSketch extends PApplet
                 mCurrentState.pausePlayback();
 
             if(mCurrentState.shouldFollowPlayingIndex)
-                mCurrentState.desiredLookCentre = mCurrentState.notePlayingIndex * mCurrentState.settings.getNoteSpacing(this);
+                mCurrentState.desiredLookCentre = mCurrentState.getXOffset(this)
+                        + mCurrentState.currentLookCentre - width / 2
+                        + mCurrentState.getKeyOffset(this, mCurrentState.notePlayingIndex);
         }
     }
 
