@@ -38,7 +38,7 @@ public class StaveSettings
         s.timeSignatureTop = MusicFont.timeSignature4;
         s.timeSignatureBottom = MusicFont.timeSignature4;
         s.clefSymbol = MusicFont.treble;
-        s.yOffset = 40;
+        s.yOffset = papplet.height / 8;
         s.framerate = 60;
         s.clefYOffset = 0;
 
