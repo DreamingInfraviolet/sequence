@@ -211,9 +211,9 @@ public class StaveSketch extends PApplet
         mPreviousState = mCurrentState;
         mCurrentState = new StaveState();
         mCurrentState.settings = StaveSettings.generateChordDisplaySettings(mContext, this);
-        mCurrentState.notes = new Note[]{Note.fromKeyName(chord.doh),
-                                         Note.fromKeyName(chord.mi),
-                                         Note.fromKeyName(chord.soh)};
+        mCurrentState.notes = new Note[]{Note.fromKeyName(chord.doh).toBass(),
+                                         Note.fromKeyName(chord.mi).toBass(),
+                                         Note.fromKeyName(chord.soh).toBass()};
     }
 
     @Override

@@ -34,6 +34,14 @@ public class Note
         this.offset = offset;
     }
 
+    public Note toBass()
+    {
+        Note note = fromKeyId(keyId + 5);
+        index = note.index;
+        offset = note.offset;
+        return this;
+    }
+
     public static Note fromKeyId(int id)
     {
         int octave = id / 12;
