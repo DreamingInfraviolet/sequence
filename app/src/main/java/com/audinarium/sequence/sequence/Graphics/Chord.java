@@ -1,8 +1,10 @@
 package com.audinarium.sequence.sequence.Graphics;
 
+import com.audinarium.sequence.sequence.Note;
 import com.audinarium.sequence.sequence.NotesPlayed;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static android.R.attr.name;
 import static android.R.id.list;
@@ -125,5 +127,15 @@ public class Chord{
         for(int i = 0; i < ids.length; ++i)
             array[i] = keyIdToName(ids[i]);
         return array;
+    }
+
+    public Note[] getConsecutiveNotes()
+    {
+        Note a = Note.fromKeyName(doh);
+        Note b = Note.fromKeyName(mi);
+        Note c = Note.fromKeyName(soh);
+        Note[] arr = new Note[]{a, b, c};
+        Arrays.sort(arr);
+        return arr;
     }
 }

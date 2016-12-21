@@ -8,8 +8,19 @@ import java.util.Collection;
  * Created by Volodymyr on 12/20/2016.
  */
 
-public class Note
+public class Note implements Comparable<Note>
 {
+    @Override
+    public int compareTo(Note o)
+    {
+        if(keyId == o.keyId)
+            return 0;
+        if(keyId > o.keyId)
+            return 1;
+        else
+            return -1;
+    }
+
     public enum Offset {None, Sharp, Flat};
 
     /** Index of the note, starting from middle C. */
