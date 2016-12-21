@@ -38,7 +38,7 @@ public class Note implements Comparable<Note>
 
     public Note toBass()
     {
-        Note note = fromKeyId(keyId + 5);
+        Note note = fromKeyId(keyId, true);
         index = note.index;
         offset = note.offset;
         return this;
@@ -46,10 +46,15 @@ public class Note implements Comparable<Note>
 
     public static Note fromKeyId(int id)
     {
+        return fromKeyId(id, false);
+    }
+
+    public static Note fromKeyId(int id, boolean bass)
+    {
         int octave = id / 12;
         int key = id % 12;
 
-        int noteIndex = new int[]{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}[key];
+        int noteIndex = new int[]{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}[key] + (bass ? 5 : 0);
         Offset offset = (key == 1 || key == 3 || key == 6 || key == 8 || key == 10) ? Offset.Sharp : Offset.None;
 
         noteIndex += octave * 7;
