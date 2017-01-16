@@ -66,7 +66,7 @@ public class StaveActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 MainActivity.instance().mSketch.clearKeysPlayed();
-                startActivity(new Intent(StaveActivity.this, MainActivity.class));
+                onBackPressed();
             }
         });
     }

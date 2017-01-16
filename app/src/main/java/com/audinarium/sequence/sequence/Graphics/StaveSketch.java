@@ -160,7 +160,7 @@ public class StaveSketch extends PApplet
 
             fill(mCurrentState.settings.primaryColour);
             rect(x - w / 2, y  - h / 2, w, h);
-            fill(0, 0, 0);
+            fill(200, 200, 200);
             textSize(mCurrentState.settings.textHeight);
             text(mCurrentState.chords[i].toString(), x - textWidth(mCurrentState.chords[i].toString()) / 2, y
                     + mCurrentState.settings.textHeight / 2);

@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        AudioPlayback.init(getApplicationContext());
-
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getFragmentManager();
         mSketch = new PianoSketch(this);

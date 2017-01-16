@@ -22,5 +22,7 @@ public class Landing extends AppCompatActivity {
                 startActivity(new Intent(Landing.this, MainActivity.class));
             }
         });
+
+        AudioPlayback.initAsync(getApplicationContext());
     }
 }

@@ -24,7 +24,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/playpausebutton"
+            app:srcCompat="@drawable/pausebutton2"
             android:background="@null"
             android:id="@+id/play" />
 
