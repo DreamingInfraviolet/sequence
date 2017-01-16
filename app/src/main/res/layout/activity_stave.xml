@@ -10,28 +10,36 @@
 
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:gravity="center_horizontal">
+        android:layout_height="75dp"
+
+        android:background="@drawable/backgroundendtop1"
+        android:weightSum="1">
+
+
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:maxHeight="60dp"
-            android:maxWidth="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:maxHeight="50dp"
+            android:maxWidth="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/pause"
+            app:srcCompat="@drawable/playpausebutton"
             android:background="@null"
             android:id="@+id/play" />
 
-
         <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:maxHeight="60dp"
-            android:maxWidth="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:maxHeight="50dp"
+            android:maxWidth="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/stop"
+            app:srcCompat="@drawable/stopbuttonclick"
             android:background="@null"
-            android:id="@+id/stop" />
+            android:id="@+id/stop"
+            android:layout_weight="0.04" />
 
     </LinearLayout>
 
@@ -39,6 +47,11 @@
                  android:layout_width="match_parent"
                  android:layout_height="match_parent" >
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageView3"
+            android:background="@drawable/backgroundendbottom1" />
     </FrameLayout>
 
 </LinearLayout>

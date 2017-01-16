@@ -51,13 +51,13 @@ public class StaveActivity extends AppCompatActivity
                 {
                     playButtonClicked = true;
                     StaveSketch.instance().getState().pausePlayback();
-                    playButton.setImageResource(R.drawable.play);
+                    playButton.setImageResource(R.drawable.playbutton2);
                 }
                 else
                 {
                     playButtonClicked = false;
                     StaveSketch.instance().getState().startPlayback();
-                    playButton.setImageResource(R.drawable.pause);
+                    playButton.setImageResource(R.drawable.pausebutton2);
                 }
             }
         });
