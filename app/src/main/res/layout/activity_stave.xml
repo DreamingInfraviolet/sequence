@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
 
-        android:background="@drawable/backgroundendtop1"
+        android:background="@drawable/backgroundendtop2"
         android:weightSum="1">
 
 
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/imageView3"
-            android:background="@drawable/backgroundendbottom1" />
+            android:background="@android:color/background_light" />
     </FrameLayout>
 
 </LinearLayout>
