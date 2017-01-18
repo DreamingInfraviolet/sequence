@@ -6,7 +6,7 @@
                 android:id="@+id/drawer_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#c0bba7"
+                android:background="#E8E8E8"
                 tools:context="com.audinarium.sequence.sequence.MainActivity" >
 
     <FrameLayout android:id="@+id/container"
